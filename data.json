@@ -1,0 +1,97 @@
+{
+  "scenarioId": "S1",
+  "scenarioTitle": "Finderup Natøvelse",
+  "scenarioDescription": "Denne scenario er oprettet til formål med ..",
+  "scenarioEnvironment": "land",
+  "scenarioCreatedBy": "Bo",
+  "scenarioCreatedTime": "2025-12-09T08:00:00",
+  "scenarioIsActive": true,
+
+  "tasks": [
+    {
+      "idT": 101,
+      "taskId": "T15",
+      "taskTitle": "Patrulje i nat",
+      "taskDescription": "Se efter i området for at se, om alt er ok",
+      "orderNumber": 1,
+      "mapType": "zone",
+      "mapRadiusInMeters": 100,
+      "mapLabel": "OP1",
+      "mapLat": 56.123,
+      "mapLng": 9.123,
+      "isActive": false,
+      "options": [
+        {
+          "optionId": "A",
+          "optionText": "Patruljen gennemfører en stille og systematisk rute gennem zonen",
+          "isCorrect": true
+        },
+        {
+          "optionId": "B",
+          "optionText": "Patruljen bliver ved køretøjerne og observerer kun derfra",
+          "isCorrect": false
+        },
+        {
+          "optionId": "C",
+          "optionText": "Patruljen tænder alt lys for at få fuldt overblik",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "idT": 102,
+      "taskId": "T8",
+      "taskTitle": "Observation nord",
+      "taskDescription": "Observation af aktivitet i området mod nord",
+      "orderNumber": 2,
+      "mapType": "punkt",
+      "mapRadiusInMeters": 20,
+      "mapLabel": "Z1",
+      "mapLat": 56.128,
+      "mapLng": 9.13,
+      "isActive": false,
+      "options": [
+        {
+          "optionId": "A",
+          "optionText": "Observationsposten etableres i dækning med udsyn mod nord",
+          "isCorrect": true
+        },
+        {
+          "optionId": "B",
+          "optionText": "Observationsposten etableres midt på vejen for bedst udsyn",
+          "isCorrect": false
+        }
+      ]
+    },
+    {
+      "idT": 103,
+      "taskId": "T10",
+      "taskTitle": "Sikring af område",
+      "taskDescription": "Sikring af området omkring OP2",
+      "orderNumber": 3,
+      "mapType": "zone",
+      "mapRadiusInMeters": 230,
+      "mapLabel": "OP2",
+      "mapLat": 56.14,
+      "mapLng": 9.1,
+      "isActive": false,
+      "options": [
+        {
+          "optionId": "A",
+          "optionText": "Der opstilles vagter i nøglepunkter rundt om zonen",
+          "isCorrect": true
+        },
+        {
+          "optionId": "B",
+          "optionText": "Hele delingen samles ét sted for at være tættere på hinanden",
+          "isCorrect": false
+        },
+        {
+          "optionId": "C",
+          "optionText": "Området efterlades uden bemanding for at undgå opdagelse",
+          "isCorrect": false
+        }
+      ]
+    }
+  ]
+}

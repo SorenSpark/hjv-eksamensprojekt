@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Hvis dette mislykkes, er JSON-filen ugyldig.
                     JSON.parse(jsonString);
 
-                    // 2. Hvis valideringen lykkedes, gemmer vi den rå JSON-streng
+                    // 2. Hvis valideringen lykkedes, gemmer vi den raw JSON-streng
                     // i browserens LocalStorage.
                     localStorage.setItem(STORAGE_KEY, jsonString);
 

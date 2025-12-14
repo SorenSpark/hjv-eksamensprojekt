@@ -69,12 +69,12 @@ main {
   bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
-  background: #020617;
+  background: $dark_grey;
   border: 1px solid #1e293b;
   padding: 1rem;
   width: 90%;
   max-width: 360px;
-  border-radius: 8px;
+  border-radius: 1rem;
   z-index: 2000;
 }
 
@@ -88,7 +88,7 @@ main {
   padding: 0.6rem;
   border: none;
   border-radius: 4px;
-  background: #2563eb;
+  background: $dark_grey;
   color: white;
 }
 

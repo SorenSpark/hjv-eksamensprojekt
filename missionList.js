@@ -90,6 +90,10 @@ init();
 
 let missionList = []; // her gemmer vi alle missions i array
 
+let lockedMissions = [];
+let activeMissions = [];
+let completedMissions = [];
+
 function receiveMissions(missions) {
   // Sorter evt. på idT så laveste ID ligger øverst
   missionList = missions.slice().sort((a, b) => a.idT - b.idT);
@@ -103,18 +107,49 @@ function receiveMissions(missions) {
 
 // 2. Vis missioner i UI
 //For hver mission i missionList
+
+function createMissionCards(allMissions) {
+  //det er her vi vil placere cards
+  const missionList = document.getElementById("activeMissionList");
+  missionList.innerHTML = "";
+
+  const missionTemplate = document.getElementById("mission-card-template");
+
+  allMissions.forEach((mission) => {
+    const clone = missionTemplate.content.cloneNode(true);
+    clone.querySelector(".mission-no").textContent = `Mission ${mission.idT}`;
+    clone.querySelector(".mission-title").textContent = mission.taskTitle;
+    clone.querySelector(".mission-desc").textContent = mission.taskDesc;
+
+    // Options container
+    const optionsContainer = clone.querySelector(".mission-options");
+    mission.options.forEach((opt) => {
+      const label = document.createElement("label");
+      const radio = document.createElement("input");
+      radio.type = "radio";
+      radio.name = `mission-${mission.idT}`; // unik for hver mission
+      radio.value = opt.optionId;
+
+      // event listener: aktiver "Udført" knap når valgt
+      radio.addEventListener("change", () => {
+        const completeBtn = clone.querySelector(".complete-btn");
+        completeBtn.disabled = false;
+        mission.selectedOption = radio.value; // gem midlertidigt valget
+      });
+
+      label.appendChild(radio);
+      label.appendChild(document.createTextNode(opt.optionText));
+      optionsContainer.appendChild(label);
+    });
+
+    missionList.appendChild(clone);
+  });
+}
+
 // Hvis status === "locked" eller "active"
 // opret missionCard i active missions container
 // Hvis status === completed:
 // Opret mission i completedList container
-function createMissionCards(missionData) {
-  console.log("missionData:", missionData);
-
-  missionData.forEach((mission) => {
-    console.log("status", mission.status);
-    console.log("status", mission.taskTitle);
-  });
-}
 
 // 3. MissionCard – locked state
 // card foldet sammen, greyed out, låst ikon, accordion kan ikke åbnes, knapper inaktive

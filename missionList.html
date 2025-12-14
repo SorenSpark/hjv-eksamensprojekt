@@ -7,13 +7,14 @@
     <style>
       .mission-card {
         background-color: rgb(178, 220, 238);
+        margin-bottom: 20px;
       }
     </style>
   </head>
   <body>
     <div id="activeList-wrapper">
       <h3>Igangværende</h3>
-      <div id="activiMissionList"></div>
+      <div id="activeMissionList"></div>
     </div>
 
     <div id="completedList-wrapper">
@@ -25,7 +26,7 @@
     <template id="mission-card-template">
       <div class="mission-card">
         <div class="mission-card-header">
-          <div class="checkmark">O</div>
+          <div class="mission-status-icon">O</div>
           <div class="mission-no"><h2>Mission 3</h2></div>
           <div class="mission-toggle-button">X</div>
         </div>
@@ -36,9 +37,9 @@
             <div class="mission-desc">Sæt kurs mod første waypoint.</div>
           </div>
           <div class="mission-option-wrapper">
-            <h3>Valgmuliheder</h3>
-            <radiobuttons></radiobuttons>
-            <button>Send svar</button>
+            <h3>Valgmuligheder</h3>
+            <div class="mission-options"></div>
+            <button class="complete-btn" disabled>Send svar</button>
           </div>
         </div>
       </div>

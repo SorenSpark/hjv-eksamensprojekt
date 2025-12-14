@@ -20,7 +20,7 @@ const userMarker = L.marker([56.12, 9.12]).addTo(map);
 //Indlæs scenarie
 
 async function loadScenario() {
-  const response = await fetch("scenario.json");
+  const response = await fetch("data.json");
   const scenario = await response.json();
 
   tasks = scenario.tasks.sort(
@@ -44,17 +44,25 @@ function activateNextTask() {
     [activeTask.mapLat, activeTask.mapLng],
     {
       radius: activeTask.mapRadiusInMeters,
-      color: "#3b82f6",
-      fillColor: "#3b82f6",
-      fillOpacity: 0.2
+      color: "#ffffff",
+      fillColor: "#ffffff",
+      fillOpacity: 0.2,
     }
   ).addTo(map);
 }
 
 //Simuler bevægelse
 
+
 map.on("click", e => {
   userMarker.setLatLng(e.latlng);
+  checkZone();
+});
+
+// Simuler "hånd" der bevæger sig ind i zonen
+map.on("mousemove", e => {
+  userMarker.setLatLng(e.latlng);
+  updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
 });
 

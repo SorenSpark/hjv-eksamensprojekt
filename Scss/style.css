@@ -5,32 +5,30 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #020617;
-  color: #e5e7eb;
+  font-family: "verdana", sans-serif;
+  color: hsl(0, 100%, 100%);
 }
 
-/* TOPBAR */
+/* Header */
 .topbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 48px;
-  background: #020617;
-  border-bottom: 1px solid #1e293b;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
   z-index: 1000;
+  background-color: hsl(0, 0%, 28%);
 }
 
 .logo {
   font-weight: bold;
 }
 
-/* MAIN */
+/* Main */
 main {
   padding-top: 48px;
   padding-bottom: 64px;
@@ -59,7 +57,7 @@ main {
   left: 0;
   right: 0;
   height: 64px;
-  background: #2563eb;
+  background: hsl(0, 0%, 28%);
   color: white;
   border: none;
   font-size: 1rem;

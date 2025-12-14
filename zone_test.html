@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Scss/_zone.scss" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=navigation"
+    />
+    <title>Zone-test</title>
+</head>
+<body>
+
+    <div id="app">
+    <div id="map"></div>
+
+    <aside>
+      <h3>Missioner</h3>
+      <ul id="taskList"></ul>
+    </aside>
+  </div>
+
+  <!-- Popup -->
+  <div id="popup" class="popup hidden">
+    <h2 id="popupTitle"></h2>
+    <p id="popupDescription"></p>
+    <div id="popupOptions"></div>
+
+    <div class="popup-actions">
+      <button id="closePopupBtn">Luk</button>
+    </div>
+  </div>
+
+    <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="zone_app.js"></script>
+
+</body>
+</html>

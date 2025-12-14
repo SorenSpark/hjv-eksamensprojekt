@@ -1,4 +1,94 @@
 /* Spacing */
 /* Colors */
 /* Typography */
-/* Text styles *//*# sourceMappingURL=style.css.map */
+/* Text styles */
+* {
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: #0f172a;
+  color: #e5e7eb;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+}
+
+/* MAP */
+#map {
+  flex: 1;
+  height: 100%;
+  width: 100vw;
+}
+
+/* SIDEBAR */
+aside {
+  width: 280px;
+  background: #020617;
+  padding: 1rem;
+  border-left: 1px solid #1e293b;
+}
+
+aside h3 {
+  margin-top: 0;
+}
+
+#taskList li {
+  padding: 0.5rem;
+  margin-bottom: 0.25rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+#taskList li.active {
+  background: #2563eb;
+}
+
+#taskList li.completed {
+  background: #14532d;
+  text-decoration: line-through;
+}
+
+/* POPUP */
+.popup {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #020617;
+  border: 1px solid #1e293b;
+  padding: 1rem;
+  width: 320px;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.popup h2 {
+  margin-top: 0;
+}
+
+.popup button {
+  margin-top: 0.5rem;
+  width: 100%;
+  padding: 0.6rem;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background: #1d4ed8;
+}
+
+.hidden {
+  display: none;
+}/*# sourceMappingURL=style.css.map */

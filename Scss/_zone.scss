@@ -3,10 +3,13 @@
   font-family: system-ui, sans-serif;
 }
 
-body {
-  margin: 0;
-  background: #0f172a;
-  color: #e5e7eb;
+html,body {
+    height: 100%;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    background: #0f172a;
+    color: #e5e7eb;
 }
 
 #app {
@@ -17,6 +20,8 @@ body {
 /* MAP */
 #map {
   flex: 1;
+  height: 100%;
+  width: 100vw;
 }
 
 /* SIDEBAR */

@@ -4,6 +4,10 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap"
 }).addTo(map);
 
+setTimeout(() => {
+  map.invalidateSize();
+}, 100);
+
 //globale variabler
 
 let scenario;

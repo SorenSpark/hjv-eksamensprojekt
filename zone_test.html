@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
-     
+
     <link rel="stylesheet" href="Scss/style.css" />
     <link
       rel="stylesheet"
@@ -21,26 +21,41 @@
     <title>Zone-test</title>
 </head>
 <body>
+    <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="logo">HV</div>
+    <div id="coords">Lat: -- | Lng: --</div>
+  </header>
 
-    <div id="app">
-    <div id="map"></div>
+  <main>
+    <!-- KORT -->
+    <section id="mapView" class="view active">
+      <div id="map"></div>
+    </section>
 
-    <aside>
-      <h3>Missioner</h3>
-      <ul id="taskList"></ul>
-    </aside>
-  </div>
+    <!-- OPGAVELISTE (placeholder – din medstuderende) -->
+    <section id="taskView" class="view">
+      <h2>Missioner</h2>
+      <p>Opgaveliste håndteres af andet teammedlem</p>
+    </section>
 
-  <!-- Popup -->
-  <div id="popup" class="popup hidden">
-    <h2 id="popupTitle">Mission</h2>
-    <p id="popupDescription"></p>
-    <div id="popupOptions"></div>
+  </main>
 
-    <div class="popup-actions">
-      <button id="closePopupBtn">Luk</button>
+  <!-- BUNDKNAP -->
+  <button id="toggleViewBtn" class="bottom-btn">
+    Gå til opgaver
+  </button>
+
+    <!-- Popup -->
+    <div id="popup" class="popup hidden">
+      <h2 id="popupTitle"></h2>
+      <p id="popupDescription"></p>
+
+      <div class="popup-actions">
+        <button id="goToMissionBtn">Se mission</button>
+        <button id="closePopupBtn">Luk</button>
+      </div>
     </div>
-  </div>
 
  
 

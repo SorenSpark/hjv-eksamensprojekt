@@ -1,88 +1,95 @@
-* {
-  box-sizing: border-box;
+html, body {
+  height: 100%;
+  margin: 0;
   font-family: system-ui, sans-serif;
+  background: #020617;
+  color: #e5e7eb;
 }
 
-html,body {
-    height: 100%;
-    width: 100vw;
-    margin: 0;
-    padding: 0;
-    background: #0f172a;
-    color: #e5e7eb;
-}
-
-#app {
+/* TOPBAR */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 48px;
+  background: #020617;
+  border-bottom: 1px solid #1e293b;
   display: flex;
-  height: 100vh;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: bold;
+}
+
+/* MAIN */
+main {
+  padding-top: 48px;
+  padding-bottom: 64px;
+  height: 100%;
+}
+
+/* VIEWS */
+.view {
+  display: none;
+  height: 100%;
+}
+
+.view.active {
+  display: block;
 }
 
 /* MAP */
 #map {
-  flex: 1;
-  height: 100%;
-  width: 100vw;
+  height: calc(100vh - 48px - 64px);
 }
 
-/* SIDEBAR */
-aside {
-  width: 280px;
-  background: #020617;
-  padding: 1rem;
-  border-left: 1px solid #1e293b;
-}
-
-aside h3 {
-  margin-top: 0;
-}
-
-#taskList li {
-  padding: 0.5rem;
-  margin-bottom: 0.25rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-#taskList li.active {
+/* BUNDKNAP */
+.bottom-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
   background: #2563eb;
-}
-
-#taskList li.completed {
-  background: #14532d;
-  text-decoration: line-through;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-weight: bold;
+  z-index: 1000;
 }
 
 /* POPUP */
 .popup {
   position: fixed;
-  bottom: 2rem;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   background: #020617;
   border: 1px solid #1e293b;
   padding: 1rem;
-  width: 320px;
+  width: 90%;
+  max-width: 360px;
   border-radius: 8px;
-  z-index: 1000;
+  z-index: 2000;
 }
 
-.popup h2 {
-  margin-top: 0;
+.popup-actions {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .popup button {
-  margin-top: 0.5rem;
-  width: 100%;
+  flex: 1;
   padding: 0.6rem;
-  background: #2563eb;
-  color: white;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
-}
-
-.popup button:hover {
-  background: #1d4ed8;
+  background: #2563eb;
+  color: white;
 }
 
 .hidden {

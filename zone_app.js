@@ -10,90 +10,81 @@ setTimeout(() => {
 
 //globale variabler
 
-let scenario;
 let tasks = [];
 let currentTaskIndex = 0;
 let activeTask = null;
-
 let activeZone = null;
-let activeMarker = null;
 
-let userMarker = L.marker([56.12, 9.12]).addTo(map);
+const userMarker = L.marker([56.12, 9.12]).addTo(map);
 
-//Indlæs scenarie og initialiser opgaver
+//Indlæs scenarie
 
 async function loadScenario() {
   const response = await fetch("scenario.json");
-  scenario = await response.json();
+  const scenario = await response.json();
 
   tasks = scenario.tasks.sort(
     (a, b) => a.orderNumber - b.orderNumber
   );
 
-  renderTaskList();
   activateNextTask();
 }
 
-//aktiver næste opgave
+//aktiver zone
 
 function activateNextTask() {
-  if (currentTaskIndex >= tasks.length) {
-    alert("Alle missioner fuldført");
-    return;
-  }
+  if (currentTaskIndex >= tasks.length) return;
 
   activeTask = tasks[currentTaskIndex];
-  activeTask.isActive = true;
   activeTask.popupShown = false;
 
-  drawTaskOnMap(activeTask);
-  updateTaskListUI();
-}
-
-//Tegn zone + centerpunkt på kortet
-
-function drawTaskOnMap(task) {
   if (activeZone) map.removeLayer(activeZone);
-  if (activeMarker) map.removeLayer(activeMarker);
 
   activeZone = L.circle(
-    [task.mapLat, task.mapLng],
+    [activeTask.mapLat, activeTask.mapLng],
     {
-      radius: task.mapRadiusInMeters,
+      radius: activeTask.mapRadiusInMeters,
       color: "#3b82f6",
       fillColor: "#3b82f6",
       fillOpacity: 0.2
     }
-  ).addTo(map);
-
-  activeMarker = L.marker(
-    [task.mapLat, task.mapLng]
   ).addTo(map);
 }
 
 //Simuler bevægelse
 
 map.on("click", e => {
-  updateUserPosition(e.latlng.lat, e.latlng.lng);
+  userMarker.setLatLng(e.latlng);
+  checkZone();
 });
 
-function updateUserPosition(lat, lng) {
-  userMarker.setLatLng([lat, lng]);
-  checkTaskZone();
+//Opdater koordinator i topbar
+
+function updateCoordinates(lat, lng) {
+  document.getElementById("coords").textContent =
+    `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
-//Tjek zone (Leaflet distancefunktion)
+//Kald når brugeren flytter sig
 
-function checkTaskZone() {
+map.on("click", e => {
+  userMarker.setLatLng(e.latlng);
+  updateCoordinates(e.latlng.lat, e.latlng.lng);
+  checkZone();
+});
+
+//Tjek om brugeren er i zonen
+
+function checkZone() {
   if (!activeTask || activeTask.popupShown) return;
 
-  const userLatLng = userMarker.getLatLng();
-  const taskLatLng = L.latLng(
+  const userPos = userMarker.getLatLng();
+  const taskPos = L.latLng(
     activeTask.mapLat,
     activeTask.mapLng
   );
 
-  const distance = userLatLng.distanceTo(taskLatLng);
+  const distance = userPos.distanceTo(taskPos);
 
   if (distance <= activeTask.mapRadiusInMeters) {
     showPopup(activeTask);
@@ -110,68 +101,44 @@ function showPopup(task) {
   document.getElementById("popupDescription").textContent =
     task.taskDescription;
 
-  const options = document.getElementById("popupOptions");
-  options.innerHTML = "";
-
-  task.options.forEach(option => {
-    const btn = document.createElement("button");
-    btn.textContent = option.optionText;
-    btn.onclick = () => handleOption(option);
-    options.appendChild(btn);
-  });
-
   document.getElementById("popup").classList.remove("hidden");
 }
 
-//Option og fuldførelse
+//Popup-knapper
 
-function handleOption(option) {
-  if (option.isCorrect) {
-    completeTask();
-  } else {
-    alert("Forkert valg – prøv igen");
-  }
-}
-
-function completeTask() {
-  activeTask.isCompleted = true;
-  activeTask.isActive = false;
-
+document.getElementById("closePopupBtn").onclick = () => {
   document.getElementById("popup").classList.add("hidden");
+};
 
-  currentTaskIndex++;
-  activeTask = null;
+document.getElementById("goToMissionBtn").onclick = () => {
+  // 👉 link til din medstuderendes side
+  window.location.href = "mission.html?taskId=" + activeTask.taskId;
+};
 
-  activateNextTask();
-}
+//Skift mellem map og opgaveliste
 
-//Taskliste
+const toggleBtn = document.getElementById("toggleViewBtn");
+const mapView = document.getElementById("mapView");
+const taskView = document.getElementById("taskView");
 
-function renderTaskList() {
-  const list = document.getElementById("taskList");
-  list.innerHTML = "";
+let showingMap = true;
 
-  tasks.forEach(task => {
-    const li = document.createElement("li");
-    li.id = `task-${task.taskId}`;
-    li.textContent = `Mission ${task.orderNumber}: ${task.taskTitle}`;
-    list.appendChild(li);
-  });
-}
+toggleBtn.onclick = () => {
+  showingMap = !showingMap;
 
-function updateTaskListUI() {
-  tasks.forEach(task => {
-    const li = document.getElementById(`task-${task.taskId}`);
-    if (!li) return;
+  mapView.classList.toggle("active", showingMap);
+  taskView.classList.toggle("active", !showingMap);
 
-    li.className = task.isCompleted
-      ? "completed"
-      : task.isActive
-      ? "active"
-      : "";
-  });
-}
+  toggleBtn.textContent = showingMap
+    ? "Gå til opgaver"
+    : "Tilbage til kort";
 
-//Start app
+  if (showingMap) {
+    setTimeout(() => map.invalidateSize(), 100);
+  }
+};
+
+
+//Start
 
 loadScenario();

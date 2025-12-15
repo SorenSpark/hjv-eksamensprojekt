@@ -44,7 +44,8 @@ main {
 
 /* MAP */
 #map {
-  height: calc(100vh - 48px - 64px);
+  /* height: calc(100vh - 48px - 64px); */
+  height: 100vh;
 }
 
 /* BUNDKNAP */
@@ -70,6 +71,11 @@ main {
 
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Fjern zoomknapper */
+.leaflet-control-zoom {
+  display: none;
 }
 
 /* POPUP */

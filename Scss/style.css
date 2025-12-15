@@ -3,7 +3,8 @@
 /* Typography */
 /* Text styles */
 /* Map & zone */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   font-family: "verdana", sans-serif;
@@ -112,7 +113,37 @@ main {
   display: none;
 }
 
+/* Task view */
+
+#taskView {
+  background-color: rgb(99, 99, 99);
+}
+
 /* Mission card */
 .mission-card {
   background-color: hsl(235, 46%, 20%);
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
+
+.mission-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.collapsed {
+  display: none;
+}
+
+.mission-card.locked {
+  opacity: 0.5;
+}
+.mission-card.state-locked {
+  background-color: rgb(137, 208, 244);
+}
+.mission-card.state-completed {
+  background-color: rgb(245, 170, 227);
+}
+
+.mission-card .state-active {
+  background-color: rgb(175, 255, 141);
+}

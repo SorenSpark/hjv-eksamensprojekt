@@ -15,23 +15,19 @@ html, body {
   top: 0;
   left: 0;
   right: 0;
-  height: 48px;
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0.5rem 1rem;
   z-index: 1000;
   background-color: hsl(0, 0%, 28%);
 }
 
-.logo {
-  font-weight: bold;
-}
-
 /* Main */
 main {
-  padding-top: 48px;
-  padding-bottom: 64px;
+  padding-top: 3rem;
+  padding-bottom: 3.813rem;
   height: 100%;
 }
 
@@ -56,26 +52,36 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 64px;
+  height: 3.813rem;
   background: hsl(0, 0%, 28%);
-  color: white;
+  color: hsl(0, 100%, 100%);
   border: none;
-  font-size: 1rem;
-  font-weight: bold;
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 2;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 /* POPUP */
 .popup {
   position: fixed;
-  bottom: 80px;
+  top: 5rem;
   left: 50%;
   transform: translateX(-50%);
   background: hsl(0, 0%, 28%);
   border: 1px solid #1e293b;
   padding: 1rem;
-  width: 90%;
-  max-width: 360px;
+  width: 70%;
+  max-width: 22.5rem;
   border-radius: 1rem;
   z-index: 2000;
 }
@@ -91,7 +97,7 @@ main {
   border: none;
   border-radius: 4px;
   background: hsl(0, 0%, 28%);
-  color: white;
+  color: hsl(0, 100%, 100%);
 }
 
 .hidden {

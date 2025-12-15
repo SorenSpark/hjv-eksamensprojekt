@@ -1,4 +1,6 @@
-
+import { receiveScenario } from "./missionList.js";
+import { receiveTaskActivated } from "./missionList.js";
+ 
 /* leaflet & openstreetmap */
 let map = L.map("map").setView([56.123, 9.123], 13);
 
@@ -28,7 +30,7 @@ async function loadScenario() {
   tasks = scenario.tasks.sort(
     (a, b) => a.orderNumber - b.orderNumber
   );
-
+  receiveScenario(scenario);
   activateNextTask();
 }
 
@@ -98,7 +100,8 @@ function checkZone() {
   if (distance <= activeTask.mapRadiusInMeters) {
     showPopup(activeTask);
     activeTask.popupShown = true;
-    recieveTaskActivated(scenario.tasks.idT);
+    receiveTaskActivated(activeTask.idT);
+    console.log("Task activated:", activeTask.idT);
   }
 }
 

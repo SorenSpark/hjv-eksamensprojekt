@@ -2,7 +2,7 @@
 // testScenario.js
 // =========================
 
-const testScenario = {
+/*const testScenario = {
   scenarioId: "S1",
   scenarioTitle: "Finderup Natøvelse",
   scenarioDescription: "Denne scenario er oprettet til formål med ..",
@@ -77,7 +77,7 @@ async function init() {
 }
 
 init();
-
+*/
 // =========================
 // Modtag missioner (entry point)
 // =========================
@@ -97,11 +97,12 @@ let completedMissions = [];
 export function receiveScenario(scenario) {
   //TO DO: skriv scenarie i UI
   receiveMissions(scenario.tasks);
+  console.log("Scenario modtaget i missionList:", scenario);
 }
 
 //modtag alle missioner / læg dem i locked array, tilføj property
 function receiveMissions(missions) {
-  lockedMissions = missions.map((mission) => ({
+  /*lockedMissions = missions.map((mission) => ({
     ...mission,
     status: "locked",
     selectedOption: null,
@@ -109,13 +110,13 @@ function receiveMissions(missions) {
   console.log(missions);
 
   // Sorter evt. på idT så laveste ID ligger øverst
-  missionList = missions.slice().sort((a, b) => a.idT - b.idT);
+  /*missionList = missions.slice().sort((a, b) => a.idT - b.idT);
   console.log("Missioner modtaget i missionList:", missionList);
 
   // Her kan du senere kalde render / UI funktioner
   // f.eks. renderAllMissions(missionList)
 
-  createMissionCards(missionList);
+  createMissionCards(missionList);*/
 }
 
 // 2. Vis missioner i UI
@@ -194,3 +195,7 @@ function createMissionCards(allMissions) {
 
 // 9. Ekstra
 // evt. checkmark-animation ved completion
+
+export function receiveTaskActivated(taskId) {
+  console.log("Modtaget aktivering af task i missionList:", taskId);
+}

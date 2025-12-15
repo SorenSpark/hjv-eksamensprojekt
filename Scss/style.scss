@@ -62,10 +62,10 @@ main {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  font-family: map-get($button-text, 'font-family');
-  font-size: map-get($button-text, 'font-size');
-  font-weight: map-get($button-text, 'font-weight');
-  line-height: map-get($button-text, 'line-height');
+/*   font-family: map-get($button-text, 'font-family'); */
+/*   font-size: map-get($button-text, 'font-size'); */
+/*   font-weight: map-get($button-text, 'font-weight'); */
+/*   line-height: map-get($button-text, 'line-height'); */
 }
 
 .material-symbols-outlined {

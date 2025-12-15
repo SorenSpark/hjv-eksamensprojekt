@@ -116,7 +116,7 @@ function activateMission(newMissionID) {
 
   console.log("NY Mission aktiveret:", mission);
   console.log("activeMissions", activeMissions.length);
-  console.log("lockedMissions efter", lockedMissions.length);
+  console.log("lockedMissions eft", lockedMissions.length);
 
   // 👉 UI:
   // - flyt missionCard fra locked → active

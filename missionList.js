@@ -1,84 +1,4 @@
 // =========================
-// testScenario.js
-// =========================
-
-/*const testScenario = {
-  scenarioId: "S1",
-  scenarioTitle: "Finderup Natøvelse",
-  scenarioDescription: "Denne scenario er oprettet til formål med ..",
-  tasks: [
-    {
-      idT: 101,
-      taskId: "T15",
-      taskTitle: "Patrulje i nat",
-      taskDescription: "Se efter i området for at se, om alt er ok",
-      options: [
-        {
-          optionId: "A",
-          optionText:
-            "Patruljen gennemfører en stille og systematisk rute gennem zonen",
-          isCorrect: true,
-        },
-        {
-          optionId: "B",
-          optionText:
-            "Patruljen bliver ved køretøjerne og observerer kun derfra",
-          isCorrect: false,
-        },
-        {
-          optionId: "C",
-          optionText: "Patruljen tænder alt lys for at få fuldt overblik",
-          isCorrect: false,
-        },
-      ],
-    },
-    {
-      idT: 102,
-      taskId: "T8",
-      taskTitle: "Observation nord",
-      taskDescription: "Observation af aktivitet i området mod nord",
-      options: [
-        {
-          optionId: "A",
-          optionText:
-            "Observationsposten etableres i dækning med udsyn mod nord",
-          isCorrect: true,
-        },
-        {
-          optionId: "B",
-          optionText:
-            "Observationsposten etableres midt på vejen for bedst udsyn",
-          isCorrect: false,
-        },
-      ],
-    },
-  ],
-};
-
-// Simulerer fetch fra Maja
-function fetchTestScenario() {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Tilføj status = 'locked' til alle tasks
-      testScenario.tasks.forEach((task) => (task.status = "locked"));
-      resolve(testScenario);
-    }, 200);
-  });
-}
-
-// =========================
-// Init app
-// =========================
-
-async function init() {
-  const scenario = await fetchTestScenario();
-  // modtag alle tasks fra scenario
-  receiveMissions(scenario.tasks);
-}
-
-init();
-*/
-// =========================
 // Modtag missioner (entry point)
 // =========================
 // 1. Modtag alle missioner i scenariet (fra Maja)
@@ -93,30 +13,34 @@ let lockedMissions = [];
 let activeMissions = [];
 let completedMissions = [];
 
+console.log("completedMissions", completedMissions.length);
+
 //modtag scenarie fra Maja
 export function receiveScenario(scenario) {
   //TO DO: skriv scenarie i UI
+
   receiveMissions(scenario.tasks);
-  console.log("Scenario modtaget i missionList:", scenario);
+  console.log("Scenario modtaget fra index.js", scenario);
 }
 
 //modtag alle missioner / læg dem i locked array, tilføj property
 function receiveMissions(missions) {
-  /*lockedMissions = missions.map((mission) => ({
+  console.log("Missions modtaget fra receiveScenario", missions);
+  lockedMissions = missions.map((mission) => ({
     ...mission,
     status: "locked",
     selectedOption: null,
   }));
-  console.log(missions);
 
   // Sorter evt. på idT så laveste ID ligger øverst
-  /*missionList = missions.slice().sort((a, b) => a.idT - b.idT);
-  console.log("Missioner modtaget i missionList:", missionList);
+  lockedMissions.sort((a, b) => a.idT - b.idT);
+  console.log("Locked Missions modtaget:", lockedMissions);
+  console.log("Locked Missions, antal:", lockedMissions.length);
 
-  // Her kan du senere kalde render / UI funktioner
-  // f.eks. renderAllMissions(missionList)
-
-  createMissionCards(missionList);*/
+  // UI:
+  // renderLockedMissions(lockedMissions)
+  // TO DO: hvordan skal de renderes - hvordan skifter design alt efter state
+  createMissionCards(lockedMissions);
 }
 
 // 2. Vis missioner i UI
@@ -177,6 +101,29 @@ function createMissionCards(allMissions) {
 //   - opdatér mission.status til "active"
 //   - fold card ud, fjern låst ikon, aktiver accordion
 
+export function receiveTaskActivated(missionID) {
+  console.log("Modtaget aktivering af task i missionList:", missionID);
+  activateMission(missionID);
+}
+
+function activateMission(newMissionID) {
+  const index = lockedMissions.findIndex((m) => m.idT === newMissionID);
+  if (index === -1) return;
+
+  const mission = lockedMissions.splice(index, 1)[0];
+  mission.status = "active";
+  activeMissions.push(mission);
+
+  console.log("NY Mission aktiveret:", mission);
+  console.log("activeMissions", activeMissions.length);
+  console.log("lockedMissions efter", lockedMissions.length);
+
+  // 👉 UI:
+  // - flyt missionCard fra locked → active
+  // - fold card ud
+  // - fjern låst ikon
+}
+
 // 6. Interaktion i aktiv mission
 // Når radiobutton vælges:
 //   - gem brugerens svar
@@ -195,7 +142,3 @@ function createMissionCards(allMissions) {
 
 // 9. Ekstra
 // evt. checkmark-animation ved completion
-
-export function receiveTaskActivated(taskId) {
-  console.log("Modtaget aktivering af task i missionList:", taskId);
-}

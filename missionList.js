@@ -1,16 +1,24 @@
+import { taskCompletedCallback } from "./script.js";
+
 // =========================
-// Mission state
+// Arrays til mission states
 // =========================
 let lockedMissions = [];
 let activeMissions = [];
 let completedMissions = [];
 
 // =========================
-// ENTRY POINT FRA MAJA
+// Modtager scenarier
 // =========================
 export function receiveScenario(scenario) {
   console.log("Scenario modtaget:", scenario);
   receiveMissions(scenario.tasks);
+
+  // Opdater HTML med titel og beskrivelse
+  document.querySelector(".scenario-title").textContent =
+    scenario.scenarioTitle;
+  document.querySelector(".scenario-desc").textContent =
+    scenario.scenarioDescription;
 }
 
 // =========================
@@ -18,18 +26,19 @@ export function receiveScenario(scenario) {
 // =========================
 function receiveMissions(missions) {
   lockedMissions = missions
-    .map((mission) => ({
+    .map((mission, index) => ({
       ...mission,
-      status: "locked",
+      status: "locked", //alle er locked når de hentes ind
       selectedOption: null,
+      OrderNumber: index + 1, //giver mission tal efter rækkefølge
     }))
     .sort((a, b) => a.idT - b.idT);
 
-  renderUI();
+  createCardUI();
 }
 
 // =========================
-// AKTIVER MISSION (fra Maja)
+// Modtager aktiv mission - ryk til aktiv liste
 // =========================
 export function receiveTaskActivated(idT) {
   const index = lockedMissions.findIndex((m) => m.idT === idT);
@@ -39,11 +48,11 @@ export function receiveTaskActivated(idT) {
   mission.status = "active";
   activeMissions.push(mission);
 
-  renderUI();
+  createCardUI();
 }
 
 // =========================
-// FULDFØR MISSION
+// Fuldfør mission - ryk til completed liste
 // =========================
 function receiveTaskCompleted(idT) {
   const index = activeMissions.findIndex((m) => m.idT === idT);
@@ -53,22 +62,38 @@ function receiveTaskCompleted(idT) {
   mission.status = "completed";
   completedMissions.push(mission);
 
-  renderUI();
+  createCardUI();
+
+  //lad maja vide at mission er gennemført
+  taskCompletedCallback(idT);
 }
 
 // =========================
-// RENDER UI (SINGLE SOURCE)
+// create cards i ui
 // =========================
-function renderUI() {
+function createCardUI() {
   renderActiveAndLocked();
   renderCompleted();
 }
+
+// function renderActiveAndLocked() {
+//   const container = document.getElementById("activeMissionList");
+//   container.innerHTML = "";
+
+//   [...lockedMissions, ...activeMissions].forEach((mission) => {
+//     container.appendChild(createMissionCard(mission));
+//   });
+// }
 
 function renderActiveAndLocked() {
   const container = document.getElementById("activeMissionList");
   container.innerHTML = "";
 
-  [...lockedMissions, ...activeMissions].forEach((mission) => {
+  activeMissions.forEach((mission) => {
+    container.appendChild(createMissionCard(mission));
+  });
+
+  lockedMissions.forEach((mission) => {
     container.appendChild(createMissionCard(mission));
   });
 }
@@ -83,7 +108,7 @@ function renderCompleted() {
 }
 
 // =========================
-// CREATE MISSION CARD
+// Create mission card (kloner html template)
 // =========================
 function createMissionCard(mission) {
   const template = document.getElementById("mission-card-template");
@@ -95,17 +120,20 @@ function createMissionCard(mission) {
   const statusIcon = clone.querySelector(".mission-status-icon");
   const completeBtn = clone.querySelector(".complete-btn");
 
-  // DATA
-  clone.querySelector(".mission-no").textContent = `Mission ${mission.idT}`;
+  // data
+  clone.querySelector(
+    ".mission-no"
+  ).textContent = `Mission ${mission.OrderNumber}`;
   clone.querySelector(".mission-title").textContent = mission.taskTitle;
   clone.querySelector(".mission-desc").textContent = mission.taskDescription;
 
+  // tilføjer klasser til styling
   card.classList.add(`state-${mission.status}`);
 
   // OPTIONS
   buildOptions(mission, body);
 
-  // STATE HANDLING
+  // forskellige stadier
   if (mission.status === "locked") {
     applyLockedState(card, body, statusIcon);
   }
@@ -124,7 +152,7 @@ function createMissionCard(mission) {
 }
 
 // =========================
-// OPTIONS
+// options - bygger radio buttons
 // =========================
 function buildOptions(mission, body) {
   if (!Array.isArray(mission.options)) return;
@@ -143,7 +171,7 @@ function buildOptions(mission, body) {
 
     radio.addEventListener("change", () => {
       mission.selectedOption = opt.optionId;
-      renderUI();
+      createCardUI();
     });
 
     label.appendChild(radio);
@@ -153,10 +181,10 @@ function buildOptions(mission, body) {
 }
 
 // =========================
-// ACCORDION
+// accordion
 // =========================
 function enableAccordion(header, body) {
-  body.classList.add("collapsed");
+  //body.classList.add("collapsed");
 
   header.onclick = () => {
     body.classList.toggle("collapsed");
@@ -168,7 +196,8 @@ function disableAccordion(body) {
 }
 
 // =========================
-// STATE STYLES
+// state styles
+// TO DO: sæt rigtige ikoner ind
 // =========================
 function applyLockedState(card, body, icon) {
   disableAccordion(body);
@@ -187,7 +216,9 @@ function applyActiveState(card, body, mission, button) {
   };
 }
 
+// TO DO: ændre til rigtigt ikon
 function applyCompletedState(card, body, icon) {
+  body.classList.add("collapsed");
   icon.textContent = "✔";
 
   card.querySelectorAll("input, button").forEach((el) => {

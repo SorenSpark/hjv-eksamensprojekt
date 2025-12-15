@@ -88,13 +88,26 @@ init();
 // Gem alle missioner i missionList
 // Laveste ID ligger øverst i listen
 
-let missionList = []; // her gemmer vi alle missions i array
-
+// mission state
 let lockedMissions = [];
 let activeMissions = [];
 let completedMissions = [];
 
+//modtag scenarie fra Maja
+function receiveScenario(scenario) {
+  //TO DO: skriv scenarie i UI
+  receiveMissions(scenario.tasks);
+}
+
+//modtag alle missioner / læg dem i locked array, tilføj property
 function receiveMissions(missions) {
+  lockedMissions = missions.map((mission) => ({
+    ...mission,
+    status: "locked",
+    selectedOption: null,
+  }));
+  console.log(missions);
+
   // Sorter evt. på idT så laveste ID ligger øverst
   missionList = missions.slice().sort((a, b) => a.idT - b.idT);
   console.log("Missioner modtaget i missionList:", missionList);

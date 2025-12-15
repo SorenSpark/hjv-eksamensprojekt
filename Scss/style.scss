@@ -44,6 +44,7 @@ main {
 #map {
   /* height: calc(100vh - 48px - 64px); */
   height: 100vh;
+  z-index: 0;
 }
 
 /* BUNDKNAP */

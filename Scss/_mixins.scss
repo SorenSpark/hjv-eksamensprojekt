@@ -1,4 +1,5 @@
 /* Text styles */
+@use './variables' as *;
 
 @mixin heading-1 {
     font-family: $font-family;

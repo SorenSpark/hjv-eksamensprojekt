@@ -64,10 +64,10 @@ main {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  /*   font-family: map-get($button-text, 'font-family'); */
-  /*   font-size: map-get($button-text, 'font-size'); */
-  /*   font-weight: map-get($button-text, 'font-weight'); */
-  /*   line-height: map-get($button-text, 'line-height'); */
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 2rem;
 }
 
 .material-symbols-outlined {
@@ -110,4 +110,9 @@ main {
 
 .hidden {
   display: none;
+}
+
+/* Mission card */
+.mission-card {
+  background-color: hsl(235, 46%, 20%);
 }/*# sourceMappingURL=style.css.map */

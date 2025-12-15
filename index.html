@@ -1,52 +1,59 @@
 <!DOCTYPE html>
 <html lang="da">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-           <!-- Leaflet JS -->
-     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Leaflet JS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
 
     <link rel="stylesheet" href="Scss/style.css" />
-  
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <script type="module" src="script.js"  defer></script>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <script type="module" src="script.js" defer></script>
 
     <title>Hjemmeværnet: Digital orienteringsløb</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="logo"><img src="./assets/logo_ikon.png" alt="Hjemmeværnets logo ikon"></div>
-    <div id="coords">Lat: -- | Lng: --</div>
-  </header>
+    <header class="topbar">
+      <div class="logo">
+        <img src="./assets/logo_ikon.png" alt="Hjemmeværnets logo ikon" />
+      </div>
+      <div id="coords">Lat: -- | Lng: --</div>
+    </header>
 
-  <main>
-    <!-- KORT -->
-    <section id="mapView" class="view active">
-      <div id="map"></div>
-    </section>
+    <main>
+      <!-- KORT -->
+      <section id="mapView" class="view active">
+        <div id="map"></div>
+      </section>
 
-    <!-- OPGAVELISTE (placeholder – din medstuderende) -->
-    <section id="taskView" class="view">
-      <h2>Missioner</h2>
-      <p>Opgaveliste håndteres af andet teammedlem</p>
-    </section>
+      <!-- OPGAVELISTE (placeholder – din medstuderende) -->
+      <section id="taskView" class="view">
+        <h2>Missioner</h2>
+        <p>Opgaveliste håndteres af andet teammedlem</p>
+      </section>
+    </main>
 
-  </main>
-
-  <!-- BUNDKNAP -->
-  <button id="toggleViewBtn" class="bottom-btn">
-    <span class="material-symbols-outlined">
-    list
-    </span>
-    Missioner
-  </button>
+    <!-- BUNDKNAP -->
+    <button id="toggleViewBtn" class="bottom-btn">
+      <span class="material-symbols-outlined"> list </span>
+      Missioner
+    </button>
 
     <!-- Popup -->
     <div id="popup" class="popup hidden">
@@ -59,7 +66,40 @@
       </div>
     </div>
 
- 
+    <section>
+      <div id="activeList-wrapper">
+        <h3>Igangværende</h3>
+        <div id="activeMissionList"></div>
+        <div id="lockedMissionList"></div>
+      </div>
 
-</body>
+      <div id="completedList-wrapper">
+        <h3>Fuldførte</h3>
+        <div id="completedMissionList"></div>
+      </div>
+
+      <!-- TEMPLATE -->
+      <template id="mission-card-template">
+        <div class="mission-card">
+          <div class="mission-card-header">
+            <div class="mission-status-icon">O</div>
+            <div class="mission-no"><h2>Mission 3</h2></div>
+            <div class="mission-toggle-button">X</div>
+          </div>
+          <div class="mission-desc-wrapper">
+            <div class="mission-desc-icon"><img src="" alt="" />x</div>
+            <div class="mission-desc-text">
+              <div class="mission-title">Start rute fra havn</div>
+              <div class="mission-desc">Sæt kurs mod første waypoint.</div>
+            </div>
+            <div class="mission-option-wrapper">
+              <h3>Valgmuligheder</h3>
+              <div class="mission-options"></div>
+              <button class="complete-btn" disabled>Send svar</button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </section>
+  </body>
 </html>

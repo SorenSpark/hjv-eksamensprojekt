@@ -94,7 +94,7 @@ let activeMissions = [];
 let completedMissions = [];
 
 //modtag scenarie fra Maja
-function receiveScenario(scenario) {
+export function receiveScenario(scenario) {
   //TO DO: skriv scenarie i UI
   receiveMissions(scenario.tasks);
 }

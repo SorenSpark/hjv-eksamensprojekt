@@ -1,2 +1,109 @@
 @use './variables' as *;
 
+/* Map & zone */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: $font-family;
+  color: $white_text;
+}
+
+/* Header */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  background-color: $dark_grey ;
+}
+
+/* Main */
+main {
+  padding-top: 3rem;
+  padding-bottom: 3.813rem;
+  height: 100%;
+}
+
+/* VIEWS */
+.view {
+  display: none;
+  height: 100%;
+}
+
+.view.active {
+  display: block;
+}
+
+/* MAP */
+#map {
+  height: calc(100vh - 48px - 64px);
+}
+
+/* BUNDKNAP */
+.bottom-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3.813rem;
+  background: $dark_grey;
+  color: $white_text;
+  border: none;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-family: map-get($button-text, 'font-family');
+  font-size: map-get($button-text, 'font-size');
+  font-weight: map-get($button-text, 'font-weight');
+  line-height: map-get($button-text, 'line-height');
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+
+/* POPUP */
+.popup {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $dark_grey;
+  border: 1px solid #1e293b;
+  padding: 1rem;
+  width: 70%;
+  max-width: 22.5rem;
+  border-radius: 1rem;
+  z-index: 2000;
+}
+
+.popup-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.popup button {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 4px;
+  background: $dark_grey;
+  color: $white_text;
+}
+
+.hidden {
+  display: none;
+}

@@ -55,13 +55,13 @@ function activateNextTask() {
 
 //Simuler bevægelse
 
-
 map.on("click", e => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
 
 // Simuler "hånd" der bevæger sig ind i zonen
+
 map.on("mousemove", e => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
@@ -84,7 +84,6 @@ map.on("click", e => {
 });
 
 //Tjek om brugeren er i zonen
-
 function checkZone() {
   if (!activeTask || activeTask.popupShown) return;
 
@@ -99,6 +98,7 @@ function checkZone() {
   if (distance <= activeTask.mapRadiusInMeters) {
     showPopup(activeTask);
     activeTask.popupShown = true;
+    recieveTaskActivated(scenario.tasks.idT);
   }
 }
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .mission-card {
+        background-color: rgb(178, 220, 238);
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="activeList-wrapper">
+      <h3>Igangværende</h3>
+      <div id="activeMissionList"></div>
+    </div>
+
+    <div id="completedList-wrapper">
+      <h3>Fuldførte</h3>
+      <div id="completedMissionList"></div>
+    </div>
+
+    <!-- TEMPLATE -->
+    <template id="mission-card-template">
+      <div class="mission-card">
+        <div class="mission-card-header">
+          <div class="mission-status-icon">O</div>
+          <div class="mission-no"><h2>Mission 3</h2></div>
+          <div class="mission-toggle-button">X</div>
+        </div>
+        <div class="mission-desc-wrapper">
+          <div class="mission-desc-icon"><img src="" alt="" />x</div>
+          <div class="mission-desc-text">
+            <div class="mission-title">Start rute fra havn</div>
+            <div class="mission-desc">Sæt kurs mod første waypoint.</div>
+          </div>
+          <div class="mission-option-wrapper">
+            <h3>Valgmuligheder</h3>
+            <div class="mission-options"></div>
+            <button class="complete-btn" disabled>Send svar</button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <script src="missionList.js"></script>
+  </body>
+</html>

@@ -25,25 +25,6 @@
     <script type="module" src="script.js" defer></script>
 
     <title>Hjemmeværnet: Digital orienteringsløb</title>
-    <style>
-      .collapsed {
-        display: none;
-      }
-
-      .mission-card.locked {
-        opacity: 0.5;
-      }
-      .mission-card.state-locked {
-        background-color: yellow;
-      }
-      .mission-card.state-completed {
-        background-color: green;
-      }
-
-      .mission-card .state-active {
-        background-color: red;
-      }
-    </style>
   </head>
 
   <body>
@@ -63,8 +44,8 @@
 
       <!-- OPGAVELISTE (placeholder – din medstuderende) -->
       <section id="taskView" class="view">
-        <h2>Missioner</h2>
-        <p>Opgaveliste håndteres af andet teammedlem</p>
+        <h2 class="scenario-title">Missioner</h2>
+        <p class="scenario-desc">Opgaveliste håndteres af andet teammedlem</p>
 
         <section>
           <div id="activeList-wrapper">
@@ -107,10 +88,12 @@
           <div class="mission-toggle-button">X</div>
         </div>
         <div class="mission-desc-wrapper">
-          <div class="mission-desc-icon"><img src="" alt="" />x</div>
+          <div class="mission-desc-icon"><img src="" alt="" />indsæt ikon</div>
           <div class="mission-desc-text">
-            <div class="mission-title">Start rute fra havn</div>
-            <div class="mission-desc">Sæt kurs mod første waypoint.</div>
+            <div class="mission-title"><h3>Start rute fra havn</h3></div>
+            <div class="mission-desc">
+              <p>Sæt kurs mod første waypoint.</p>
+            </div>
           </div>
           <div class="mission-option-wrapper">
             <h3>Valgmuligheder</h3>

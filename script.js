@@ -3,7 +3,7 @@ import { receiveTaskActivated } from "./missionList.js";
  
 /* leaflet & openstreetmap */
 let map = L.map("map");
-/* map.setView([56.123, 9.123], 13); */
+map.setView([56.123, 9.123], 13);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap"
@@ -23,8 +23,8 @@ let activeZone = null;
 const userMarker = L.marker([56.12, 9.12]).addTo(map);
 
 
-// Geo-lokation og tracking:
-if (navigator.geolocation){
+// Forslag til Geo-lokation og tracking:
+/* if (navigator.geolocation){
     navigator.geolocation.watchPosition( 
         (position) => {
             const userLat = position.coords.latitude;
@@ -44,7 +44,7 @@ if (navigator.geolocation){
     );
 } else {
     console.error("browseren understøtter ikke geolokation")
-};
+}; */
 
 
 //Indlæs scenarie
@@ -76,7 +76,7 @@ function activateNextTask() {
       radius: activeTask.mapRadiusInMeters,
       color: "#ffffffff",
       fillColor: "#ffffffff",
-      fillOpacity: 0.2,
+      fillOpacity: 0.3,
     }
   ).addTo(map);
 }

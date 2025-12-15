@@ -25,6 +25,25 @@
     <script type="module" src="script.js" defer></script>
 
     <title>Hjemmeværnet: Digital orienteringsløb</title>
+    <style>
+      .collapsed {
+        display: none;
+      }
+
+      .mission-card.locked {
+        opacity: 0.5;
+      }
+      .mission-card.state-locked {
+        background-color: yellow;
+      }
+      .mission-card.state-completed {
+        background-color: green;
+      }
+
+      .mission-card .state-active {
+        background-color: red;
+      }
+    </style>
   </head>
 
   <body>
@@ -46,6 +65,19 @@
       <section id="taskView" class="view">
         <h2>Missioner</h2>
         <p>Opgaveliste håndteres af andet teammedlem</p>
+
+        <section>
+          <div id="activeList-wrapper">
+            <h3>Igangværende</h3>
+            <div id="activeMissionList"></div>
+            <div id="lockedMissionList"></div>
+          </div>
+
+          <div id="completedList-wrapper">
+            <h3>Fuldførte</h3>
+            <div id="completedMissionList"></div>
+          </div>
+        </section>
       </section>
     </main>
 
@@ -66,40 +98,27 @@
       </div>
     </div>
 
-    <section>
-      <div id="activeList-wrapper">
-        <h3>Igangværende</h3>
-        <div id="activeMissionList"></div>
-        <div id="lockedMissionList"></div>
-      </div>
-
-      <div id="completedList-wrapper">
-        <h3>Fuldførte</h3>
-        <div id="completedMissionList"></div>
-      </div>
-
-      <!-- TEMPLATE -->
-      <template id="mission-card-template">
-        <div class="mission-card">
-          <div class="mission-card-header">
-            <div class="mission-status-icon">O</div>
-            <div class="mission-no"><h2>Mission 3</h2></div>
-            <div class="mission-toggle-button">X</div>
+    <!-- TEMPLATE -->
+    <template id="mission-card-template">
+      <div class="mission-card">
+        <div class="mission-card-header">
+          <div class="mission-status-icon">O</div>
+          <div class="mission-no"><h2>Mission 3</h2></div>
+          <div class="mission-toggle-button">X</div>
+        </div>
+        <div class="mission-desc-wrapper">
+          <div class="mission-desc-icon"><img src="" alt="" />x</div>
+          <div class="mission-desc-text">
+            <div class="mission-title">Start rute fra havn</div>
+            <div class="mission-desc">Sæt kurs mod første waypoint.</div>
           </div>
-          <div class="mission-desc-wrapper">
-            <div class="mission-desc-icon"><img src="" alt="" />x</div>
-            <div class="mission-desc-text">
-              <div class="mission-title">Start rute fra havn</div>
-              <div class="mission-desc">Sæt kurs mod første waypoint.</div>
-            </div>
-            <div class="mission-option-wrapper">
-              <h3>Valgmuligheder</h3>
-              <div class="mission-options"></div>
-              <button class="complete-btn" disabled>Send svar</button>
-            </div>
+          <div class="mission-option-wrapper">
+            <h3>Valgmuligheder</h3>
+            <div class="mission-options"></div>
+            <button class="complete-btn" disabled>Send svar</button>
           </div>
         </div>
-      </template>
-    </section>
+      </div>
+    </template>
   </body>
 </html>

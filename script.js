@@ -1,12 +1,12 @@
 import { receiveScenario } from "./missionList.js";
 import { receiveTaskActivated } from "./missionList.js";
- 
+
 /* leaflet & openstreetmap */
 let map = L.map("map");
 map.setView([56.123, 9.123], 13);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: "© OpenStreetMap"
+  attribution: "© OpenStreetMap",
 }).addTo(map);
 
 setTimeout(() => {
@@ -53,9 +53,7 @@ async function loadScenario() {
   const response = await fetch("data.json");
   const scenario = await response.json();
 
-  tasks = scenario.tasks.sort(
-    (a, b) => a.orderNumber - b.orderNumber
-  );
+  tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
   receiveScenario(scenario);
   activateNextTask();
 }
@@ -75,22 +73,22 @@ function activateNextTask() {
     {
       radius: activeTask.mapRadiusInMeters,
       color: "#ffffffff",
-      fillColor: "#ffffffff",
+      fillColor: "#8D1B3D",
       fillOpacity: 0.3,
     }
   ).addTo(map);
 }
 
-//Simuler bevægelse
+//Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
-map.on("click", e => {
+map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
 
 // Simuler "hånd" der bevæger sig ind i zonen
 
-map.on("mousemove", e => {
+map.on("mousemove", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
@@ -99,13 +97,12 @@ map.on("mousemove", e => {
 //Opdater koordinator i topbar
 
 function updateCoordinates(lat, lng) {
-  document.getElementById("coords").textContent =
-    `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
+  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
 //Kald når brugeren flytter sig
 
-map.on("click", e => {
+map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
@@ -116,10 +113,7 @@ function checkZone() {
   if (!activeTask || activeTask.popupShown) return;
 
   const userPos = userMarker.getLatLng();
-  const taskPos = L.latLng(
-    activeTask.mapLat,
-    activeTask.mapLng
-  );
+  const taskPos = L.latLng(activeTask.mapLat, activeTask.mapLng);
 
   const distance = userPos.distanceTo(taskPos);
 
@@ -145,13 +139,17 @@ function showPopup(task) {
 
 //Popup-knapper
 
+//Luk popup
 document.getElementById("closePopupBtn").onclick = () => {
   document.getElementById("popup").classList.add("hidden");
 };
 
+//Gå til misson
 document.getElementById("goToMissionBtn").onclick = () => {
-  // 👉 link til din medstuderendes side
-  window.location.href = "mission.html?taskId=" + activeTask.taskId;
+  mapView.classList.remove("active");
+  taskView.classList.add("active");
+  showingMap = false;
+  document.getElementById("popup").classList.add("hidden");
 };
 
 //Skift mellem map og opgaveliste
@@ -168,16 +166,31 @@ toggleBtn.onclick = () => {
   mapView.classList.toggle("active", showingMap);
   taskView.classList.toggle("active", !showingMap);
 
-  toggleBtn.textContent = showingMap
-    ? "Gå til opgaver"
-    : "Tilbage til kort";
+  toggleBtn.textContent = showingMap ? "Gå til opgaver" : "Tilbage til kort";
 
   if (showingMap) {
     setTimeout(() => map.invalidateSize(), 100);
   }
 };
 
+//Fjerner aktiv zone og aktiverer næste opgave på kortet, når mission er fuldført
 
-//Start
+export function taskCompletedCallback(taskId) {
+  console.log("Maja får besked: mission fuldført", taskId);
+  //Fjern nuværende aktive zone på kortet
+  if (activeZone) {
+    map.removeLayer(activeZone);
+    activeZone = null;
+  }
+  // Aktiver næste opgave
+  currentTaskIndex++;
+    if (currentTaskIndex < tasks.length) {
+    console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
+    activateNextTask();
+  } else {
+    console.log("Alle tasks er fuldført");
+  }
+}
+
 
 loadScenario();

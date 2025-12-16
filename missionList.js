@@ -1,144 +1,230 @@
-// =========================
-// Modtag missioner (entry point)
-// =========================
-// 1. Modtag alle missioner i scenariet (fra Maja)
-// Modtag liste med alle missioner
-// Hver mission har status: locked, active og completed
-//Men her er de vel alle locked fra start? og det skal jeg bygge ind i objektet??
-// Gem alle missioner i missionList
-// Laveste ID ligger øverst i listen
+import { taskCompletedCallback } from "./script.js";
 
-// mission state
+// =========================
+// Arrays til mission states
+// =========================
 let lockedMissions = [];
 let activeMissions = [];
 let completedMissions = [];
 
-console.log("completedMissions", completedMissions.length);
-
-//modtag scenarie fra Maja
+// =========================
+// Modtager scenarier
+// =========================
 export function receiveScenario(scenario) {
-  //TO DO: skriv scenarie i UI
-
+  console.log("Scenario modtaget:", scenario);
   receiveMissions(scenario.tasks);
-  console.log("Scenario modtaget fra index.js", scenario);
+
+  // Opdater HTML med titel og beskrivelse
+  document.querySelector(".scenario-title").textContent =
+    scenario.scenarioTitle;
+  document.querySelector(".scenario-desc").textContent =
+    scenario.scenarioDescription;
 }
 
-//modtag alle missioner / læg dem i locked array, tilføj property
+// =========================
+// MODTAG & INITIALISÉR MISSIONS
+// =========================
 function receiveMissions(missions) {
-  console.log("Missions modtaget fra receiveScenario", missions);
-  lockedMissions = missions.map((mission) => ({
-    ...mission,
-    status: "locked",
-    selectedOption: null,
-  }));
+  lockedMissions = missions
+    .map((mission, index) => ({
+      ...mission,
+      status: "locked", //alle er locked når de hentes ind
+      selectedOption: null,
+      OrderNumber: index + 1, //giver mission tal efter rækkefølge
+    }))
+    .sort((a, b) => a.idT - b.idT);
 
-  // Sorter evt. på idT så laveste ID ligger øverst
-  lockedMissions.sort((a, b) => a.idT - b.idT);
-  console.log("Locked Missions modtaget:", lockedMissions);
-  console.log("Locked Missions, antal:", lockedMissions.length);
-
-  // UI:
-  // renderLockedMissions(lockedMissions)
-  // TO DO: hvordan skal de renderes - hvordan skifter design alt efter state
-  createMissionCards(lockedMissions);
+  createCardUI();
 }
 
-// 2. Vis missioner i UI
-//For hver mission i missionList
-
-function createMissionCards(allMissions) {
-  //det er her vi vil placere cards
-  const missionList = document.getElementById("activeMissionList");
-  missionList.innerHTML = "";
-
-  const missionTemplate = document.getElementById("mission-card-template");
-
-  allMissions.forEach((mission) => {
-    const clone = missionTemplate.content.cloneNode(true);
-    clone.querySelector(".mission-no").textContent = `Mission ${mission.idT}`;
-    clone.querySelector(".mission-title").textContent = mission.taskTitle;
-    clone.querySelector(".mission-desc").textContent = mission.taskDesc;
-
-    // Options container
-    const optionsContainer = clone.querySelector(".mission-options");
-    mission.options.forEach((opt) => {
-      const label = document.createElement("label");
-      const radio = document.createElement("input");
-      radio.type = "radio";
-      radio.name = `mission-${mission.idT}`; // unik for hver mission
-      radio.value = opt.optionId;
-
-      // event listener: aktiver "Udført" knap når valgt
-      radio.addEventListener("change", () => {
-        const completeBtn = clone.querySelector(".complete-btn");
-        completeBtn.disabled = false;
-        mission.selectedOption = radio.value; // gem midlertidigt valget
-      });
-
-      label.appendChild(radio);
-      label.appendChild(document.createTextNode(opt.optionText));
-      optionsContainer.appendChild(label);
-    });
-
-    missionList.appendChild(clone);
-  });
-}
-
-// Hvis status === "locked" eller "active"
-// opret missionCard i active missions container
-// Hvis status === completed:
-// Opret mission i completedList container
-
-// 3. MissionCard – locked state
-// card foldet sammen, greyed out, låst ikon, accordion kan ikke åbnes, knapper inaktive
-
-// 4. MissionCard – active state
-// card foldet ud, accordion aktiveret, titel/beskrivelse/valgmuligheder synlige
-// "Udført"-knap inaktiv indtil radiobutton valgt
-
-// 5. Aktivering af mission
-// Når en mission bliver aktiv:
-//   - opdatér mission.status til "active"
-//   - fold card ud, fjern låst ikon, aktiver accordion
-
-export function receiveTaskActivated(missionID) {
-  console.log("Modtaget aktivering af task i missionList:", missionID);
-  activateMission(missionID);
-}
-
-function activateMission(newMissionID) {
-  const index = lockedMissions.findIndex((m) => m.idT === newMissionID);
+// =========================
+// Modtager aktiv mission - ryk til aktiv liste
+// =========================
+export function receiveTaskActivated(idT) {
+  const index = lockedMissions.findIndex((m) => m.idT === idT);
   if (index === -1) return;
 
   const mission = lockedMissions.splice(index, 1)[0];
   mission.status = "active";
   activeMissions.push(mission);
 
-  console.log("NY Mission aktiveret:", mission);
-  console.log("activeMissions", activeMissions.length);
-  console.log("lockedMissions eft", lockedMissions.length);
-
-  // 👉 UI:
-  // - flyt missionCard fra locked → active
-  // - fold card ud
-  // - fjern låst ikon
+  createCardUI();
 }
 
-// 6. Interaktion i aktiv mission
-// Når radiobutton vælges:
-//   - gem brugerens svar
-//   - aktivér "Udført"-knappen
+// =========================
+// Fuldfør mission - ryk til completed liste
+// =========================
+function receiveTaskCompleted(idT) {
+  const index = activeMissions.findIndex((m) => m.idT === idT);
+  if (index === -1) return;
 
-// 7. Fuldfør mission
-// Når "Udført"-knappen klikkes:
-//   - gem brugerens svar
-//   - opdatér mission.status til "completed"
-//   - fjern mission fra active missions container
-//   - tilføj missionCard til completedList container
+  const mission = activeMissions.splice(index, 1)[0];
+  mission.status = "completed";
+  completedMissions.push(mission);
 
-// 8. MissionCard – completed state
-// card foldet sammen, checkmark vises, valgt svar markeret med farve
-// knap disabled/grå, tekst ændret til "Fuldført"
+  createCardUI();
 
-// 9. Ekstra
-// evt. checkmark-animation ved completion
+  //lad maja vide at mission er gennemført
+  taskCompletedCallback(idT);
+}
+
+// =========================
+// create cards i ui
+// =========================
+function createCardUI() {
+  renderActiveAndLocked();
+  renderCompleted();
+}
+
+// function renderActiveAndLocked() {
+//   const container = document.getElementById("activeMissionList");
+//   container.innerHTML = "";
+
+//   [...lockedMissions, ...activeMissions].forEach((mission) => {
+//     container.appendChild(createMissionCard(mission));
+//   });
+// }
+
+function renderActiveAndLocked() {
+  const container = document.getElementById("activeMissionList");
+  container.innerHTML = "";
+
+  activeMissions.forEach((mission) => {
+    container.appendChild(createMissionCard(mission));
+  });
+
+  lockedMissions.forEach((mission) => {
+    container.appendChild(createMissionCard(mission));
+  });
+}
+
+function renderCompleted() {
+  const container = document.getElementById("completedMissionList");
+  container.innerHTML = "";
+
+  completedMissions.forEach((mission) => {
+    container.appendChild(createMissionCard(mission));
+  });
+}
+
+// =========================
+// Create mission card (kloner html template)
+// =========================
+function createMissionCard(mission) {
+  const template = document.getElementById("mission-card-template");
+  const clone = template.content.cloneNode(true);
+
+  const card = clone.querySelector(".mission-card");
+  const header = clone.querySelector(".mission-card-header");
+  const wrapper = clone.querySelector(".mission-desc-wrapper");
+  const statusIcon = clone.querySelector(".mission-status-icon");
+  const completeBtn = clone.querySelector(".complete-btn");
+
+  // data
+  clone.querySelector(
+    ".mission-no"
+  ).textContent = `Mission ${mission.OrderNumber}`;
+  clone.querySelector(".mission-title").textContent = mission.taskTitle;
+  clone.querySelector(".mission-desc").textContent = mission.taskDescription;
+
+  // tilføjer klasser til styling
+  card.classList.add(`state-${mission.status}`);
+
+  // OPTIONS
+  buildOptions(mission, wrapper);
+
+  // forskellige stadier
+  if (mission.status === "locked") {
+    applyLockedState(card, wrapper, statusIcon);
+  }
+
+  if (mission.status === "active") {
+    applyActiveState(card, wrapper, mission, completeBtn);
+    enableAccordion(header, wrapper);
+  }
+
+  if (mission.status === "completed") {
+    applyCompletedState(card, wrapper, statusIcon);
+    enableAccordion(header, wrapper);
+  }
+
+  return clone;
+}
+
+// =========================
+// options - bygger radio buttons
+// =========================
+function buildOptions(mission, wrapper) {
+  if (!Array.isArray(mission.options)) return;
+
+  const container = wrapper.querySelector(".mission-options");
+  container.innerHTML = "";
+
+  mission.options.forEach((opt) => {
+    const label = document.createElement("label");
+    const radio = document.createElement("input");
+
+    radio.type = "radio";
+    radio.name = `mission-${mission.idT}`;
+    radio.value = opt.optionId;
+    radio.checked = mission.selectedOption === opt.optionId;
+
+    radio.addEventListener("change", () => {
+      mission.selectedOption = opt.optionId;
+      createCardUI();
+    });
+
+    label.appendChild(radio);
+    label.append(opt.optionText);
+    container.appendChild(label);
+  });
+}
+
+// =========================
+// accordion
+// =========================
+function enableAccordion(header, wrapper) {
+  // wrapper.classList.add("collapsed");
+
+  header.onclick = () => {
+    wrapper.classList.toggle("collapsed");
+  };
+}
+
+function disableAccordion(wrapper) {
+  wrapper.classList.add("collapsed");
+}
+
+// =========================
+// state styles
+// TO DO: sæt rigtige ikoner ind
+// =========================
+function applyLockedState(card, wrapper, icon) {
+  disableAccordion(wrapper);
+  icon.textContent = "🔒";
+
+  card.querySelectorAll("input, button").forEach((el) => {
+    el.disabled = true;
+  });
+}
+
+function applyActiveState(card, wrapper, mission, button) {
+  button.disabled = !mission.selectedOption;
+
+  button.onclick = () => {
+    receiveTaskCompleted(mission.idT);
+  };
+}
+
+// TO DO: ændre til rigtigt ikon
+function applyCompletedState(card, wrapper, icon) {
+  wrapper.classList.add("collapsed");
+  icon.textContent = "✔";
+
+  card.querySelectorAll("input, button").forEach((el) => {
+    el.disabled = true;
+  });
+
+  const btn = wrapper.querySelector(".complete-btn");
+  btn.textContent = "Fuldført";
+}

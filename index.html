@@ -44,8 +44,19 @@
 
       <!-- OPGAVELISTE (placeholder – din medstuderende) -->
       <section id="taskView" class="view">
-        <h2>Missioner</h2>
-        <p>Opgaveliste håndteres af andet teammedlem</p>
+        <h2 class="scenario-title">Missioner</h2>
+        <p class="scenario-desc">Opgaveliste håndteres af andet teammedlem</p>
+
+        <div id="activeList-wrapper">
+          <h3>Igangværende</h3>
+          <div id="activeMissionList"></div>
+          <div id="lockedMissionList"></div>
+        </div>
+
+        <div id="completedList-wrapper">
+          <h3>Fuldførte</h3>
+          <div id="completedMissionList"></div>
+        </div>
       </section>
     </main>
 
@@ -68,45 +79,36 @@
       </div>
 
       <div class="popup-actions">
-        <button id="goToMissionBtn">Se mission</button>
         <button id="closePopupBtn">Luk</button>
+        <button id="goToMissionBtn">Se mission</button>
       </div>
     </div>
 
-    <section>
-      <div id="activeList-wrapper">
-        <h3>Igangværende</h3>
-        <div id="activeMissionList"></div>
-        <div id="lockedMissionList"></div>
-      </div>
-
-      <div id="completedList-wrapper">
-        <h3>Fuldførte</h3>
-        <div id="completedMissionList"></div>
-      </div>
-
-      <!-- TEMPLATE -->
-      <template id="mission-card-template">
-        <div class="mission-card">
-          <div class="mission-card-header">
+    <!-- TEMPLATE -->
+    <template id="mission-card-template">
+      <div class="mission-card">
+        <div class="mission-card-header">
+          <div class="mission-card-header-group">
             <div class="mission-status-icon">O</div>
             <div class="mission-no"><h2>Mission 3</h2></div>
-            <div class="mission-toggle-button">X</div>
           </div>
-          <div class="mission-desc-wrapper">
-            <div class="mission-desc-icon"><img src="" alt="" />x</div>
-            <div class="mission-desc-text">
-              <div class="mission-title">Start rute fra havn</div>
-              <div class="mission-desc">Sæt kurs mod første waypoint.</div>
+          <div class="mission-toggle-button">X</div>
+        </div>
+        <div class="mission-desc-wrapper">
+          <div class="mission-desc-icon"><img src="" alt="" />indsæt ikon</div>
+          <div class="mission-desc-text">
+            <div class="mission-title"><h3>Start rute fra havn</h3></div>
+            <div class="mission-desc">
+              <p>Sæt kurs mod første waypoint.</p>
             </div>
-            <div class="mission-option-wrapper">
-              <h3>Valgmuligheder</h3>
-              <div class="mission-options"></div>
-              <button class="complete-btn" disabled>Send svar</button>
-            </div>
+          </div>
+          <div class="mission-option-wrapper">
+            <h3>Valgmuligheder</h3>
+            <div class="mission-options"></div>
+            <button class="complete-btn" disabled>Send svar</button>
           </div>
         </div>
-      </template>
-    </section>
+      </div>
+    </template>
   </body>
 </html>

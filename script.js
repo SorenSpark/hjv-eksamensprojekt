@@ -21,7 +21,7 @@ let activeTask = null;
 let activeZone = null;
 
 const locationMarker = L.icon({
-  iconUrl: 'assets/locationMarker.svg',
+  iconUrl: "assets/locationMarker.svg",
 
   iconSize: [30, 25],
 });
@@ -111,7 +111,6 @@ if (navigator.geolocation){
     console.error("browseren understøtter ikke geolokation")
 };
 
-
 //Indlæs scenarie
 
 async function loadScenario() {
@@ -133,15 +132,12 @@ function activateNextTask() {
 
   if (activeZone) map.removeLayer(activeZone);
 
-  activeZone = L.circle(
-    [activeTask.mapLat, activeTask.mapLng],
-    {
-      radius: activeTask.mapRadiusInMeters,
-      color: "#ffffffff",
-      fillColor: "#8D1B3D",
-      fillOpacity: 0.3,
-    }
-  ).addTo(map);
+  activeZone = L.circle([activeTask.mapLat, activeTask.mapLng], {
+    radius: activeTask.mapRadiusInMeters,
+    color: "#ffffffff",
+    fillColor: "#8D1B3D",
+    fillOpacity: 0.3,
+  }).addTo(map);
 }
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
@@ -249,13 +245,12 @@ export function taskCompletedCallback(taskId) {
   }
   // Aktiver næste opgave
   currentTaskIndex++;
-    if (currentTaskIndex < tasks.length) {
+  if (currentTaskIndex < tasks.length) {
     console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
     activateNextTask();
   } else {
     console.log("Alle tasks er fuldført");
   }
 }
-
 
 loadScenario();

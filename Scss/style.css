@@ -129,10 +129,12 @@ main {
 .popup .popup-actions {
   display: flex;
 }
-.popup .popup-actions #goToMissionBtn, .popup .popup-actions #closePopupBtn {
+.popup .popup-actions #goToMissionBtn,
+.popup .popup-actions #closePopupBtn {
   padding: 0.5rem;
 }
-.popup .popup-actions #goToMissionBtn:hover, .popup .popup-actions #closePopupBtn:hover {
+.popup .popup-actions #goToMissionBtn:hover,
+.popup .popup-actions #closePopupBtn:hover {
   background-color: hsl(0, 0%, 59%);
 }
 .popup .popup-actions #goToMissionBtn {
@@ -195,11 +197,23 @@ main {
   border-radius: 5px;
   border: 1px solid hsla(0, 0%, 100%, 0.6);
 }
+.mission-card h2 {
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+.mission-card h3,
+.mission-card .mission-title {
+  font-family: "verdana", sans-serif;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.438rem;
+}
 
 .mission-card-header {
   display: flex;
   justify-content: space-between;
-  color: hsla(0, 0%, 100%, 0.7);
   cursor: pointer;
   font-family: "verdana", sans-serif;
   font-size: 1.25rem;
@@ -229,6 +243,18 @@ main {
   opacity: 0;
 }
 
+.mission-desc-text {
+  display: flex;
+  gap: 8px;
+}
+
+.mission-desc {
+  font-family: "verdana", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+}
+
 .mission-card.state-locked {
   background-color: hsl(174, 18%, 30%);
 }
@@ -238,7 +264,7 @@ main {
 }
 
 .mission-card.state-completed {
-  background-color: #dc1414;
+  background-color: hsla(0, 0%, 28%, 0.7);
 }
 
 /*Ikoner*/
@@ -258,4 +284,67 @@ main {
 
 .mission-card.is-open .accordion-icon {
   transform: rotate(90deg);
+}
+
+.complete-btn {
+  padding: 10px 16px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--white-text, #fff);
+  background-color: var(--primary_red, #8d1b3d);
+  color: hsl(0, 100%, 100%);
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+.complete-btn:hover {
+  background-color: var(--primary_red, 0.5);
+}
+
+button[disabled] {
+  opacity: 0.5;
+}
+
+/*radio button*/
+.option-btn input[type=radio] {
+  display: none;
+}
+
+.option-btn {
+  border-radius: 5px;
+  border: 1px solid hsl(0, 0%, 59%);
+  background-color: hsla(0, 0%, 100%, 0.1);
+  display: flex;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 1rem;
+  font-family: "verdana", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+}
+
+.option-btn:hover {
+  background: hsla(0, 0%, 100%, 0.25);
+}
+
+.option-btn:has(input[type=radio]:checked) {
+  background: hsla(0, 0%, 100%, 0.5);
+}
+
+.state-locked .option-btn,
+.state-completed .option-btn {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+/**mission icon**/
+.mission-desc-icon.material-symbols-outlined {
+  font-size: 1rem;
+  background-color: hsla(0, 0%, 100%, 0.8);
+  padding: 1rem;
+  color: hsl(174, 18%, 30%);
+  max-height: 100%;
 }/*# sourceMappingURL=style.css.map */

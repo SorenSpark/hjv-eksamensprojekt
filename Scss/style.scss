@@ -81,30 +81,28 @@ main {
   left: 50%;
   transform: translateX(-50%);
   background: $dark_grey;
-  border: 1px solid #1e293b;
-  padding: $spacing-400;
-  max-width: 20.625rem;
+  border: 1.5px solid $white-text;
   border-radius: 1rem;
   z-index: 2000;
   margin-top: 0;
+  max-width: 22.5rem;
+  min-width: 18.5rem;
 
   .popup-header {
     display: flex;
-    gap: $spacing-100;
-    margin-bottom: 0.5rem;
+    gap: 1.5rem;
+    padding: $spacing-300;
+
     align-items: flex-start;
     border-bottom: 1px solid $white-text;
-    margin-left: -$spacing-400;
-    margin-right: -$spacing-400;
-    padding-left: $spacing-400;
-    padding-right: $spacing-400;
 
     .alert-wrapper {
       height: 0.5rem;
+      width: 20%;
         img {
         background-color: $white_text;
         padding: 0.2rem;
-        width: 70%;
+        width: 100%;
       }
     }
     .popup-text {
@@ -113,17 +111,30 @@ main {
         margin-top: 0;
         margin-bottom: 0.5rem;
       }
+      p {
+        margin-bottom: 0;
+      }
     } 
   }
 
   .popup-actions {
   display: flex;
-  gap: 0.5rem;
 
    #goToMissionBtn, #closePopupBtn {
-    padding: 0;
+    padding: $spacing-100;
+     &:hover {
+      background-color: $light_grey;
+     }
    }
+
+   #goToMissionBtn {
+    border-radius: 0 0 1rem 0;
+    border-left: 1px solid $white-text;
+   }
+   #closePopupBtn {
+    border-radius: 0 0 0 1rem;
   }
+}
 }
 
 

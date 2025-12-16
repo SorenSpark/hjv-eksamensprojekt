@@ -141,7 +141,6 @@ main {
 }
 .popup .popup-actions #closePopupBtn {
   border-radius: 0 0 0 1rem;
-  border-right: 1px solid hsl(0, 100%, 100%);
 }
 
 .popup button {
@@ -228,6 +227,4 @@ main {
 
 .mission-card.state-completed {
   background-color: #dc1414;
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

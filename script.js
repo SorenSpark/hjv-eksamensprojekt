@@ -169,7 +169,8 @@ toggleBtn.onclick = () => {
   }
 };
 
-//TODO: BESKED TIL MAJA OM AT MISSION ER FULDFØRT
+//Fjerner aktiv zone og aktiverer næste opgave på kortet, når mission er fuldført
+
 export function taskCompletedCallback(taskId) {
   console.log("Maja får besked: mission fuldført", taskId);
   //Fjern nuværende aktive zone på kortet

@@ -2,7 +2,8 @@ import { receiveScenario } from "./missionList.js";
 import { receiveTaskActivated } from "./missionList.js";
 
 /* leaflet & openstreetmap */
-let map = L.map("map").setView([56.123, 9.123], 13);
+let map = L.map("map");
+map.setView([56.123, 9.123], 13);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap",
@@ -20,6 +21,31 @@ let activeTask = null;
 let activeZone = null;
 
 const userMarker = L.marker([56.12, 9.12]).addTo(map);
+
+
+// Forslag til Geo-lokation og tracking:
+/* if (navigator.geolocation){
+    navigator.geolocation.watchPosition( 
+        (position) => {
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+        
+            userMarker.setLatLng([userLat, userLng]);
+            map.setView([userLat, userLng], 15);
+        },
+        (error) => {
+            console.error(`Geolokation fejl: ${error.message}`);
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 5000
+        }
+    );
+} else {
+    console.error("browseren understøtter ikke geolokation")
+}; */
+
 
 //Indlæs scenarie
 
@@ -42,12 +68,15 @@ function activateNextTask() {
 
   if (activeZone) map.removeLayer(activeZone);
 
-  activeZone = L.circle([activeTask.mapLat, activeTask.mapLng], {
-    radius: activeTask.mapRadiusInMeters,
-    color: "#ffffff",
-    fillColor: "#ffffff",
-    fillOpacity: 0.2,
-  }).addTo(map);
+  activeZone = L.circle(
+    [activeTask.mapLat, activeTask.mapLng],
+    {
+      radius: activeTask.mapRadiusInMeters,
+      color: "#ffffffff",
+      fillColor: "#ffffffff",
+      fillOpacity: 0.3,
+    }
+  ).addTo(map);
 }
 
 //Simuler bevægelse

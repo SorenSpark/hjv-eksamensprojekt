@@ -47,18 +47,16 @@
         <h2 class="scenario-title">Missioner</h2>
         <p class="scenario-desc">Opgaveliste håndteres af andet teammedlem</p>
 
-        <section>
-          <div id="activeList-wrapper">
-            <h3>Igangværende</h3>
-            <div id="activeMissionList"></div>
-            <div id="lockedMissionList"></div>
-          </div>
+        <div id="activeList-wrapper">
+          <h3>Igangværende</h3>
+          <div id="activeMissionList"></div>
+          <div id="lockedMissionList"></div>
+        </div>
 
-          <div id="completedList-wrapper">
-            <h3>Fuldførte</h3>
-            <div id="completedMissionList"></div>
-          </div>
-        </section>
+        <div id="completedList-wrapper">
+          <h3>Fuldførte</h3>
+          <div id="completedMissionList"></div>
+        </div>
       </section>
     </main>
 
@@ -83,8 +81,10 @@
     <template id="mission-card-template">
       <div class="mission-card">
         <div class="mission-card-header">
-          <div class="mission-status-icon">O</div>
-          <div class="mission-no"><h2>Mission 3</h2></div>
+          <div class="mission-card-header-group">
+            <div class="mission-status-icon">O</div>
+            <div class="mission-no"><h2>Mission 3</h2></div>
+          </div>
           <div class="mission-toggle-button">X</div>
         </div>
         <div class="mission-desc-wrapper">

@@ -116,7 +116,7 @@ function createMissionCard(mission) {
 
   const card = clone.querySelector(".mission-card");
   const header = clone.querySelector(".mission-card-header");
-  const body = clone.querySelector(".mission-desc-wrapper");
+  const wrapper = clone.querySelector(".mission-desc-wrapper");
   const statusIcon = clone.querySelector(".mission-status-icon");
   const completeBtn = clone.querySelector(".complete-btn");
 
@@ -131,21 +131,21 @@ function createMissionCard(mission) {
   card.classList.add(`state-${mission.status}`);
 
   // OPTIONS
-  buildOptions(mission, body);
+  buildOptions(mission, wrapper);
 
   // forskellige stadier
   if (mission.status === "locked") {
-    applyLockedState(card, body, statusIcon);
+    applyLockedState(card, wrapper, statusIcon);
   }
 
   if (mission.status === "active") {
-    applyActiveState(card, body, mission, completeBtn);
-    enableAccordion(header, body);
+    applyActiveState(card, wrapper, mission, completeBtn);
+    enableAccordion(header, wrapper);
   }
 
   if (mission.status === "completed") {
-    applyCompletedState(card, body, statusIcon);
-    enableAccordion(header, body);
+    applyCompletedState(card, wrapper, statusIcon);
+    enableAccordion(header, wrapper);
   }
 
   return clone;
@@ -154,10 +154,10 @@ function createMissionCard(mission) {
 // =========================
 // options - bygger radio buttons
 // =========================
-function buildOptions(mission, body) {
+function buildOptions(mission, wrapper) {
   if (!Array.isArray(mission.options)) return;
 
-  const container = body.querySelector(".mission-options");
+  const container = wrapper.querySelector(".mission-options");
   container.innerHTML = "";
 
   mission.options.forEach((opt) => {
@@ -183,24 +183,24 @@ function buildOptions(mission, body) {
 // =========================
 // accordion
 // =========================
-function enableAccordion(header, body) {
-  //body.classList.add("collapsed");
+function enableAccordion(header, wrapper) {
+  // wrapper.classList.add("collapsed");
 
   header.onclick = () => {
-    body.classList.toggle("collapsed");
+    wrapper.classList.toggle("collapsed");
   };
 }
 
-function disableAccordion(body) {
-  body.classList.add("collapsed");
+function disableAccordion(wrapper) {
+  wrapper.classList.add("collapsed");
 }
 
 // =========================
 // state styles
 // TO DO: sæt rigtige ikoner ind
 // =========================
-function applyLockedState(card, body, icon) {
-  disableAccordion(body);
+function applyLockedState(card, wrapper, icon) {
+  disableAccordion(wrapper);
   icon.textContent = "🔒";
 
   card.querySelectorAll("input, button").forEach((el) => {
@@ -208,7 +208,7 @@ function applyLockedState(card, body, icon) {
   });
 }
 
-function applyActiveState(card, body, mission, button) {
+function applyActiveState(card, wrapper, mission, button) {
   button.disabled = !mission.selectedOption;
 
   button.onclick = () => {
@@ -217,14 +217,14 @@ function applyActiveState(card, body, mission, button) {
 }
 
 // TO DO: ændre til rigtigt ikon
-function applyCompletedState(card, body, icon) {
-  body.classList.add("collapsed");
+function applyCompletedState(card, wrapper, icon) {
+  wrapper.classList.add("collapsed");
   icon.textContent = "✔";
 
   card.querySelectorAll("input, button").forEach((el) => {
     el.disabled = true;
   });
 
-  const btn = body.querySelector(".complete-btn");
+  const btn = wrapper.querySelector(".complete-btn");
   btn.textContent = "Fuldført";
 }

@@ -1,8 +1,9 @@
-@use './variables' as *;
-@use './mixins' as *;
+@use "./variables" as *;
+@use "./mixins" as *;
 
 /* Map & zone */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   font-family: $font-family;
@@ -21,7 +22,7 @@ html, body {
   justify-content: space-between;
   padding: 0.5rem 1rem;
   z-index: 1000;
-  background-color: $dark_grey ;
+  background-color: $dark_grey;
 }
 
 /* Main */
@@ -29,16 +30,6 @@ main {
   padding-top: 3rem;
   padding-bottom: 3.813rem;
   height: 100%;
-}
-
-/* VIEWS */
-.view {
-  display: none;
-  height: 100%;
-}
-
-.view.active {
-  display: block;
 }
 
 /* MAP */
@@ -67,16 +58,12 @@ main {
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
 /* Fjern zoomknapper */
 .leaflet-control-zoom {
-    display: none;
+  display: none;
 }
 
 /* POPUP */
@@ -112,8 +99,76 @@ main {
   display: none;
 }
 
+/* task view */
+
+/* VIEWS */
+.view {
+  display: none;
+  background-color: $dark_grey_70;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  min-height: 100%;
+}
+
+.view.active {
+  display: block;
+}
+
+/* List Wrappers */
+#activeList-wrapper,
+#completedList-wrapper {
+  border: 1px solid $light_grey;
+  padding: $spacing-100;
+  border-radius: 10px;
+}
+
+#activeMissionList,
+#completedList-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-200;
+}
 
 /* Mission card */
+
 .mission-card {
-    background-color: $primary_grey;
+  padding: $spacing-200;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-300;
+  border-radius: 5px;
+  border: 1px solid $white_opacity_60;
+}
+
+.mission-card-header {
+  display: flex;
+  justify-content: space-between;
+  color: $white_opacity_70;
+  @include dropdown-text;
+  // border-bottom: 1px solid $white_opacity_10;
+  // padding-bottom: $spacing-100;
+}
+
+.mission-card-header-group {
+  align-items: center;
+  display: flex;
+  gap: $spacing-200;
+}
+
+/* Mission card states */
+.mission-desc-wrapper.collapsed {
+  display: none;
+}
+
+.mission-card.state-locked {
+  background-color: $primary_grey;
+}
+
+.mission-card.state-active {
+  background-color: $primary_grey;
+}
+
+.mission-card.state-completed {
+  background-color: #dc1414;
 }

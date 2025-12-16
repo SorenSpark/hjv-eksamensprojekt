@@ -10,14 +10,13 @@ body {
   color: $white_text;
 }
 
-p{
+p {
   @include brodtext;
 }
 button {
   cursor: pointer;
   @include button-text;
 }
-
 
 /* Header */
 .topbar {
@@ -100,12 +99,13 @@ main {
     .alert-wrapper {
       height: 0.5rem;
       width: 20%;
-        img {
+      img {
         background-color: $white_text;
         padding: 0.2rem;
         width: 100%;
       }
     }
+
     .popup-text {
       h2 {
         @include dropdown-text;
@@ -115,27 +115,28 @@ main {
       p {
         margin-bottom: 0;
       }
-    } 
+    }
   }
 
   .popup-actions {
-  display: flex;
+    display: flex;
 
-   #goToMissionBtn, #closePopupBtn {
-    padding: $spacing-100;
-     &:hover {
-      background-color: $light_grey;
-     }
-   }
+    #goToMissionBtn,
+    #closePopupBtn {
+      padding: $spacing-100;
+      &:hover {
+        background-color: $light_grey;
+      }
+    }
 
-   #goToMissionBtn {
-    border-radius: 0 0 1rem 0;
-    border-left: 1px solid $white-text;
-   }
-   #closePopupBtn {
-    border-radius: 0 0 0 1rem;
+    #goToMissionBtn {
+      border-radius: 0 0 1rem 0;
+      border-left: 1px solid $white-text;
+    }
+    #closePopupBtn {
+      border-radius: 0 0 0 1rem;
+    }
   }
-}
 }
 
 .popup button {
@@ -191,12 +192,21 @@ main {
   gap: $spacing-300;
   border-radius: 5px;
   border: 1px solid $white_opacity_60;
+
+  h2 {
+    @include heading-2;
+  }
+
+  h3,
+  .mission-title {
+    @include label-text;
+  }
 }
 
 .mission-card-header {
   display: flex;
   justify-content: space-between;
-  color: $white_opacity_70;
+  // color: $white_opacity_70;
   cursor: pointer;
   @include dropdown-text;
 
@@ -228,6 +238,15 @@ main {
   opacity: 0;
 }
 
+.mission-desc-text {
+  display: flex;
+  gap: 8px;
+}
+
+.mission-desc {
+  @include brodtext;
+}
+
 .mission-card.state-locked {
   background-color: $primary_grey;
 }
@@ -237,7 +256,7 @@ main {
 }
 
 .mission-card.state-completed {
-  background-color: #dc1414;
+  background-color: $dark_grey_70;
 }
 
 /*Ikoner*/
@@ -257,4 +276,63 @@ main {
 
 .mission-card.is-open .accordion-icon {
   transform: rotate(90deg);
+}
+
+//accordion
+
+.complete-btn {
+  padding: 10px 16px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--white-text, #fff);
+  background-color: var(--primary_red, #8d1b3d);
+  color: $white_text;
+  @include button-text;
+
+  &:hover {
+    background-color: var(--primary_red, 0.5);
+  }
+}
+
+button[disabled] {
+  opacity: 0.5;
+}
+
+/*radio button*/
+.option-btn input[type="radio"] {
+  display: none;
+}
+
+.option-btn {
+  border-radius: 5px;
+  border: 1px solid $light_grey;
+  background-color: $white_opacity_10;
+  display: flex;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: $spacing-200;
+  @include brodtext;
+}
+.option-btn:hover {
+  background: $white_opacity_25;
+}
+
+.option-btn:has(input[type="radio"]:checked) {
+  background: $white_opacity_50;
+}
+
+.state-locked .option-btn,
+.state-completed .option-btn {
+  opacity: 0.9;
+  cursor: not-allowed;
+}
+
+/**mission icon**/
+.mission-desc-icon.material-symbols-outlined {
+  font-size: $spacing-200;
+  background-color: $white_opacity_80;
+  padding: $spacing-200;
+  color: $primary_grey;
+  max-height: 100%;
 }

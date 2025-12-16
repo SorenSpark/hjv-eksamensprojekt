@@ -21,13 +21,11 @@ let activeTask = null;
 let activeZone = null;
 
 const locationMarker = L.icon({
-  iconUrl: 'assets/locationMarker.svg',
+  iconUrl: "assets/locationMarker.svg",
 
   iconSize: [30, 25],
 });
-const userMarker = L.marker([56.12, 9.12], {icon: locationMarker}).addTo(map);
-
-
+const userMarker = L.marker([56.12, 9.12], { icon: locationMarker }).addTo(map);
 
 // Forslag til Geo-lokation og tracking:
 /* if (navigator.geolocation){
@@ -52,7 +50,6 @@ const userMarker = L.marker([56.12, 9.12], {icon: locationMarker}).addTo(map);
     console.error("browseren understøtter ikke geolokation")
 }; */
 
-
 //Indlæs scenarie
 
 async function loadScenario() {
@@ -74,15 +71,12 @@ function activateNextTask() {
 
   if (activeZone) map.removeLayer(activeZone);
 
-  activeZone = L.circle(
-    [activeTask.mapLat, activeTask.mapLng],
-    {
-      radius: activeTask.mapRadiusInMeters,
-      color: "#ffffffff",
-      fillColor: "#8D1B3D",
-      fillOpacity: 0.3,
-    }
-  ).addTo(map);
+  activeZone = L.circle([activeTask.mapLat, activeTask.mapLng], {
+    radius: activeTask.mapRadiusInMeters,
+    color: "#ffffffff",
+    fillColor: "#8D1B3D",
+    fillOpacity: 0.3,
+  }).addTo(map);
 }
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
@@ -103,7 +97,9 @@ map.on("mousemove", (e) => {
 //Opdater koordinator i topbar
 
 function updateCoordinates(lat, lng) {
-  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
+  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(
+    5
+  )} | Lng: ${lng.toFixed(5)}`;
 }
 
 //Kald når brugeren flytter sig
@@ -190,13 +186,12 @@ export function taskCompletedCallback(taskId) {
   }
   // Aktiver næste opgave
   currentTaskIndex++;
-    if (currentTaskIndex < tasks.length) {
+  if (currentTaskIndex < tasks.length) {
     console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
     activateNextTask();
   } else {
     console.log("Alle tasks er fuldført");
   }
 }
-
 
 loadScenario();

@@ -73,13 +73,13 @@ function activateNextTask() {
     {
       radius: activeTask.mapRadiusInMeters,
       color: "#ffffffff",
-      fillColor: "#ffffffff",
+      fillColor: "#8D1B3D",
       fillOpacity: 0.3,
     }
   ).addTo(map);
 }
 
-//Simuler bevægelse
+//Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
 map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
@@ -97,9 +97,7 @@ map.on("mousemove", (e) => {
 //Opdater koordinator i topbar
 
 function updateCoordinates(lat, lng) {
-  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(
-    5
-  )} | Lng: ${lng.toFixed(5)}`;
+  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
 //Kald når brugeren flytter sig
@@ -174,9 +172,20 @@ toggleBtn.onclick = () => {
 //TODO: BESKED TIL MAJA OM AT MISSION ER FULDFØRT
 export function taskCompletedCallback(taskId) {
   console.log("Maja får besked: mission fuldført", taskId);
-  // TO DO: Her kan Maja aktivere næste mission
+  //Fjern nuværende aktive zone på kortet
+  if (activeZone) {
+    map.removeLayer(activeZone);
+    activeZone = null;
+  }
+  // Aktiver næste opgave
+  currentTaskIndex++;
+    if (currentTaskIndex < tasks.length) {
+    console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
+    activateNextTask();
+  } else {
+    console.log("Alle tasks er fuldført");
+  }
 }
 
-//Start
 
 loadScenario();

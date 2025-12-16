@@ -47,18 +47,16 @@
         <h2 class="scenario-title">Missioner</h2>
         <p class="scenario-desc">Opgaveliste håndteres af andet teammedlem</p>
 
-        <section>
-          <div id="activeList-wrapper">
-            <h3>Igangværende</h3>
-            <div id="activeMissionList"></div>
-            <div id="lockedMissionList"></div>
-          </div>
+        <div id="activeList-wrapper">
+          <h3>Igangværende</h3>
+          <div id="activeMissionList"></div>
+          <div id="lockedMissionList"></div>
+        </div>
 
-          <div id="completedList-wrapper">
-            <h3>Fuldførte</h3>
-            <div id="completedMissionList"></div>
-          </div>
-        </section>
+        <div id="completedList-wrapper">
+          <h3>Fuldførte</h3>
+          <div id="completedMissionList"></div>
+        </div>
       </section>
     </main>
 
@@ -70,12 +68,19 @@
 
     <!-- Popup -->
     <div id="popup" class="popup hidden">
-      <h2 id="popupTitle"></h2>
-      <p id="popupDescription"></p>
+      <div class="popup-header">
+        <div class="alert-wrapper">
+          <img src="assets/darkmode-alerticon.png" alt="Alert symbol">
+        </div>
+        <div class="popup-text">
+          <h2 id="popupTitle">Mission</h2>    
+          <p id="popupDescription"></p>
+        </div>
+      </div>
 
       <div class="popup-actions">
-        <button id="goToMissionBtn">Se mission</button>
         <button id="closePopupBtn">Luk</button>
+        <button id="goToMissionBtn">Se mission</button>
       </div>
     </div>
 
@@ -83,8 +88,10 @@
     <template id="mission-card-template">
       <div class="mission-card">
         <div class="mission-card-header">
-          <div class="mission-status-icon">O</div>
-          <div class="mission-no"><h2>Mission 3</h2></div>
+          <div class="mission-card-header-group">
+            <div class="mission-status-icon">O</div>
+            <div class="mission-no"><h2>Mission 3</h2></div>
+          </div>
           <div class="mission-toggle-button">X</div>
         </div>
         <div class="mission-desc-wrapper">

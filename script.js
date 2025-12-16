@@ -82,18 +82,21 @@ function handleOrientation(event) {
 
 
 // Nyere IOS kræver brugervalgt svar på aktivering.
-requestOrientationPermission();
+
 
 
 // Forslag til Geo-lokation og tracking:
-/* if (navigator.geolocation){
+if (navigator.geolocation){
+      // Anmod om compasstilladelse sammen med location
+    requestOrientationPermission();
     navigator.geolocation.watchPosition( 
         (position) => {
             const userLat = position.coords.latitude;
             const userLng = position.coords.longitude;
         
             userMarker.setLatLng([userLat, userLng]);
-            map.setView([userLat, userLng], 15);
+            map.setView([userLat, userLng]);
+            checkZone();
         },
         (error) => {
             console.error(`Geolokation fejl: ${error.message}`);
@@ -106,7 +109,7 @@ requestOrientationPermission();
     );
 } else {
     console.error("browseren understøtter ikke geolokation")
-}; */
+};
 
 
 //Indlæs scenarie
@@ -143,7 +146,7 @@ function activateNextTask() {
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
-map.on("click", (e) => {
+/* map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
@@ -154,11 +157,11 @@ map.on("mousemove", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-});
+}); */
 
 //Opdater koordinator i topbar
 
-function updateCoordinates(lat, lng) {
+/* function updateCoordinates(lat, lng) {
   document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
@@ -168,7 +171,7 @@ map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-});
+}); */
 
 //Tjek om brugeren er i zonen
 function checkZone() {

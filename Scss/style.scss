@@ -160,8 +160,8 @@ main {
   background-color: $dark_grey_70;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  padding: 0.5rem;
   min-height: 100%;
+  padding: 0.5rem;
 }
 
 .view.active {
@@ -176,8 +176,12 @@ main {
   border-radius: 10px;
 }
 
+#activeList-wrapper {
+  margin-bottom: $spacing-200;
+}
+
 #activeMissionList,
-#completedList-wrapper {
+#completedList {
   display: flex;
   flex-direction: column;
   gap: $spacing-200;
@@ -187,9 +191,8 @@ main {
 
 .mission-card {
   padding: $spacing-200;
-  // display: flex;
+  display: flex;
   flex-direction: column;
-  gap: $spacing-300;
   border-radius: 5px;
   border: 1px solid $white_opacity_60;
 
@@ -228,7 +231,7 @@ main {
 
 .mission-desc-wrapper {
   overflow: hidden;
-  max-height: 1000px; // stor nok til indhold
+  max-height: 1000px;
   transition: max-height 0.35s ease, opacity 0.25s ease;
   opacity: 1;
 }
@@ -253,6 +256,7 @@ main {
 
 .mission-card.state-active {
   background-color: $primary_grey;
+  gap: 0;
 }
 
 .mission-card.state-completed {

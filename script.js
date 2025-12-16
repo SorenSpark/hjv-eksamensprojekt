@@ -20,7 +20,13 @@ let currentTaskIndex = 0;
 let activeTask = null;
 let activeZone = null;
 
-const userMarker = L.marker([56.12, 9.12]).addTo(map);
+const locationMarker = L.icon({
+  iconUrl: 'assets/locationMarker.svg',
+
+  iconSize: [30, 25],
+});
+const userMarker = L.marker([56.12, 9.12], {icon: locationMarker}).addTo(map);
+
 
 
 // Forslag til Geo-lokation og tracking:

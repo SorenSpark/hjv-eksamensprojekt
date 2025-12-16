@@ -25,17 +25,78 @@ const locationMarker = L.icon({
 
   iconSize: [30, 25],
 });
-const userMarker = L.marker([56.12, 9.12], { icon: locationMarker }).addTo(map);
+const userMarker = L.marker([56.12, 9.12], {
+  icon: locationMarker,
+  rotationAngle: 0,
+  rotationOrigin: 'center'
+}).addTo(map);
+
+// enhedens orientation
+let orientationActive = false;
+
+function requestOrientationPermission() {
+  if (typeof DeviceOrientationEvent !== 'undefined' && 
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iOS 13+ requires permission
+    DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if (response === 'granted') {
+          startOrientationTracking();
+        } else {
+          console.log('Orientation permission denied');
+        }
+      })
+      .catch(console.error);
+  } else {
+    // Non-iOS or older devices
+    startOrientationTracking();
+  }
+}
+
+function startOrientationTracking() {
+  orientationActive = true;
+  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+  window.addEventListener('deviceorientation', handleOrientation, true);
+}
+
+function handleOrientation(event) {
+  if (!orientationActive) return;
+  
+  let heading = null;
+  
+  if (event.absolute && event.alpha !== null) {
+    // Android Chrome
+    heading = 360 - event.alpha;
+  } else if (event.webkitCompassHeading !== undefined) {
+    // iOS Safari
+    heading = event.webkitCompassHeading;
+  } else if (event.alpha !== null) {
+    // Fallback
+    heading = 360 - event.alpha;
+  }
+  
+  if (heading !== null) {
+    userMarker.setRotationAngle(heading);
+  }
+}
+
+
+// Nyere IOS kræver brugervalgt svar på aktivering.
+
+
 
 // Forslag til Geo-lokation og tracking:
-/* if (navigator.geolocation){
+if (navigator.geolocation){
+      // Anmod om compasstilladelse sammen med location
+    requestOrientationPermission();
     navigator.geolocation.watchPosition( 
         (position) => {
             const userLat = position.coords.latitude;
             const userLng = position.coords.longitude;
         
             userMarker.setLatLng([userLat, userLng]);
-            map.setView([userLat, userLng], 15);
+            map.setView([userLat, userLng]);
+            checkZone();
         },
         (error) => {
             console.error(`Geolokation fejl: ${error.message}`);
@@ -48,7 +109,7 @@ const userMarker = L.marker([56.12, 9.12], { icon: locationMarker }).addTo(map);
     );
 } else {
     console.error("browseren understøtter ikke geolokation")
-}; */
+};
 
 //Indlæs scenarie
 
@@ -81,7 +142,7 @@ function activateNextTask() {
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
-map.on("click", (e) => {
+/* map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
@@ -92,14 +153,12 @@ map.on("mousemove", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-});
+}); */
 
 //Opdater koordinator i topbar
 
-function updateCoordinates(lat, lng) {
-  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(
-    5
-  )} | Lng: ${lng.toFixed(5)}`;
+/* function updateCoordinates(lat, lng) {
+  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
 //Kald når brugeren flytter sig
@@ -108,7 +167,7 @@ map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-});
+}); */
 
 //Tjek om brugeren er i zonen
 function checkZone() {

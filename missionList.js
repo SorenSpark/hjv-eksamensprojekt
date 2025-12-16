@@ -140,12 +140,12 @@ function createMissionCard(mission) {
 
   if (mission.status === "active") {
     applyActiveState(card, wrapper, mission, completeBtn);
-    enableAccordion(header, wrapper);
+    enableAccordion(header, wrapper, card, true);
   }
 
   if (mission.status === "completed") {
     applyCompletedState(card, wrapper, statusIcon);
-    enableAccordion(header, wrapper);
+    enableAccordion(header, wrapper, card, false);
   }
 
   return clone;
@@ -183,16 +183,58 @@ function buildOptions(mission, wrapper) {
 // =========================
 // accordion
 // =========================
-function enableAccordion(header, wrapper) {
-  // wrapper.classList.add("collapsed");
+// function enableAccordion(header, wrapper) {
+//   // wrapper.classList.add("collapsed");
+
+//   header.onclick = () => {
+//     wrapper.classList.toggle("collapsed");
+//   };
+// }
+
+// function enableAccordion(header, wrapper, card) {
+//   // start lukket
+//   wrapper.classList.add("collapsed");
+//   card.classList.add("is-collapsed");
+
+//   header.onclick = () => {
+//     const isCollapsed = wrapper.classList.contains("collapsed");
+
+//     wrapper.classList.toggle("collapsed");
+//     card.classList.toggle("is-collapsed", !isCollapsed);
+//     card.classList.toggle("is-open", isCollapsed);
+//   };
+// }
+function enableAccordion(header, wrapper, card, startOpen = false) {
+  if (startOpen) {
+    wrapper.classList.remove("collapsed");
+    card.classList.add("is-open");
+    card.classList.remove("is-collapsed");
+  } else {
+    wrapper.classList.add("collapsed");
+    card.classList.add("is-collapsed");
+    card.classList.remove("is-open");
+  }
 
   header.onclick = () => {
+    const isCollapsed = wrapper.classList.contains("collapsed");
+
     wrapper.classList.toggle("collapsed");
+    card.classList.toggle("is-open", isCollapsed);
+    card.classList.toggle("is-collapsed", !isCollapsed);
   };
 }
 
 function disableAccordion(wrapper) {
   wrapper.classList.add("collapsed");
+}
+
+// IKON
+function setStatusIcon(container, iconName) {
+  container.innerHTML = `
+    <span class="material-symbols-outlined">
+      ${iconName}
+    </span>
+  `;
 }
 
 // =========================
@@ -201,7 +243,7 @@ function disableAccordion(wrapper) {
 // =========================
 function applyLockedState(card, wrapper, icon) {
   disableAccordion(wrapper);
-  icon.textContent = "🔒";
+  setStatusIcon(icon, "lock");
 
   card.querySelectorAll("input, button").forEach((el) => {
     el.disabled = true;
@@ -209,8 +251,8 @@ function applyLockedState(card, wrapper, icon) {
 }
 
 function applyActiveState(card, wrapper, mission, button) {
+  setStatusIcon(card.querySelector(".mission-status-icon"), "circle");
   button.disabled = !mission.selectedOption;
-
   button.onclick = () => {
     receiveTaskCompleted(mission.idT);
   };
@@ -219,7 +261,7 @@ function applyActiveState(card, wrapper, mission, button) {
 // TO DO: ændre til rigtigt ikon
 function applyCompletedState(card, wrapper, icon) {
   wrapper.classList.add("collapsed");
-  icon.textContent = "✔";
+  setStatusIcon(icon, "check_circle");
 
   card.querySelectorAll("input, button").forEach((el) => {
     el.disabled = true;

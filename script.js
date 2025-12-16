@@ -111,6 +111,14 @@ if (navigator.geolocation){
     console.error("browseren understøtter ikke geolokation")
 };
 
+//Vis intro popup
+function showIntroPopup(scenario) {
+  document.getElementById("introTitle").textContent = scenario.scenarioTitle;
+  document.getElementById("introDescription").textContent = scenario.scenarioDescription;
+  document.getElementById("introPopup").classList.remove("hidden");
+  document.getElementById("introPopup").style.display = "block";
+}
+
 //Indlæs scenarie
 
 async function loadScenario() {
@@ -119,8 +127,16 @@ async function loadScenario() {
 
   tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
   receiveScenario(scenario);
-  activateNextTask();
+  showIntroPopup(scenario);
 }
+
+// Når brugeren klikker start:
+document.getElementById("startScenarioBtn").onclick = () => {
+  document.getElementById("introPopup").classList.add("hidden");
+  document.getElementById("introPopup").style.display = "none";
+  activateNextTask(); // Aktiver første mission
+  console.log("Scenario startet", tasks[0].idT);
+};
 
 //aktiver zone
 
@@ -138,6 +154,7 @@ function activateNextTask() {
     fillColor: "#8D1B3D",
     fillOpacity: 0.3,
   }).addTo(map);
+  console.log("Aktiverer zone for task:", activeTask.idT);
 }
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)

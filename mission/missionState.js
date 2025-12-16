@@ -1,5 +1,5 @@
 import { createCardUI } from "./missionRender.js";
-import { taskCompletedCallback } from "../script.js"; // juster stien efter din struktur
+import { taskCompletedCallback } from "../script.js";
 
 // =========================
 // arrays til forskellige states
@@ -23,7 +23,7 @@ export function receiveMissions(missions) {
 }
 
 // =========================
-// ændringer i states
+// modtager aktiv mission: push til aktiv array
 // =========================
 export function activateMission(idT) {
   const index = lockedMissions.findIndex((m) => m.idT === idT);
@@ -36,6 +36,9 @@ export function activateMission(idT) {
   createCardUI(getState());
 }
 
+// =========================
+// Når mission er complete pushes den til complete array og sender callback
+// =========================
 export function completeMission(idT) {
   const index = activeMissions.findIndex((m) => m.idT === idT);
   if (index === -1) return;
@@ -47,7 +50,7 @@ export function completeMission(idT) {
   createCardUI(getState());
 
   if (taskCompletedCallback) {
-    taskCompletedCallback(idT); // Maja får besked
+    taskCompletedCallback(idT);
   }
 }
 

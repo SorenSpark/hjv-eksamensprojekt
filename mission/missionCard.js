@@ -1,4 +1,6 @@
 import { completeMission } from "./missionState.js";
+import { buildOptions } from "./missionOptions.js";
+import { enableAccordion } from "./missionAccordion.js";
 
 export function createMissionCard(mission) {
   const template = document.getElementById("mission-card-template");
@@ -10,115 +12,52 @@ export function createMissionCard(mission) {
   const statusIcon = clone.querySelector(".mission-status-icon");
   const button = clone.querySelector(".complete-btn");
 
-  // DATA
+  // Data indsættes i klon
   clone.querySelector(
     ".mission-no"
   ).textContent = `Mission ${mission.OrderNumber}`;
   clone.querySelector(".mission-title").textContent = mission.taskTitle;
   clone.querySelector(".mission-desc").textContent = mission.taskDescription;
 
+  // Tilføjer klasse til styling af forskellige states
   card.classList.add(`state-${mission.status}`);
 
-  buildOptions(mission, wrapper, button);
-
-  // =========================
-  // STATES
-  // =========================
-  if (mission.status === "locked") {
-    wrapper.classList.add("collapsed");
-    card.classList.add("is-collapsed");
-    setStatusIcon(statusIcon, "lock");
-    disable(card);
-    header.onclick = null; // sikrer, at accordion ikke kan åbnes
-  }
-
-  if (mission.status === "active") {
-    setStatusIcon(statusIcon, "radio_button_unchecked");
-    button.disabled = !mission.selectedOption;
-    button.onclick = () => completeMission(mission.idT);
-
-    // Kun active missions får accordion
-    enableAccordion(header, wrapper, card, true);
-  }
-
-  if (mission.status === "completed") {
-    wrapper.classList.add("collapsed");
-    setStatusIcon(statusIcon, "check_circle");
-    disable(card);
-    button.textContent = "Fuldført";
-
-    // Completed kan stadig åbnes, men starter lukket
-    enableAccordion(header, wrapper, card, false);
-  }
+  buildOptions(mission, wrapper, button); //kalder funktion i missionOptions.js modul
+  applyState({ mission, card, header, wrapper, statusIcon, button });
 
   return clone;
 }
 
-// =========================
-// helpers
-// =========================
-function buildOptions(mission, wrapper, button) {
-  const container = wrapper.querySelector(".mission-options");
-  container.innerHTML = "";
+function applyState({ mission, card, header, wrapper, statusIcon, button }) {
+  switch (mission.status) {
+    case "locked":
+      setIcon(statusIcon, "lock");
+      wrapper.classList.add("collapsed");
+      disable(card);
+      header.onclick = null;
+      break;
 
-  if (!Array.isArray(mission.options)) return;
+    case "active":
+      setIcon(statusIcon, "radio_button_unchecked");
+      button.disabled = !mission.selectedOption;
+      button.onclick = () => completeMission(mission.idT);
+      enableAccordion(header, wrapper, card, true);
+      break;
 
-  mission.options.forEach((opt) => {
-    const label = document.createElement("label");
-    label.classList.add("option-btn");
-
-    const radio = document.createElement("input");
-    radio.type = "radio";
-    radio.name = `mission-${mission.idT}`;
-    radio.value = opt.optionId;
-    radio.checked = mission.selectedOption === opt.optionId;
-
-    radio.onchange = () => {
-      mission.selectedOption = opt.optionId;
-      button.disabled = false;
-    };
-
-    label.append(radio, opt.optionText);
-    container.appendChild(label);
-  });
-}
-
-function enableAccordion(header, wrapper, card, startOpen = false) {
-  const chevron = header.querySelector(".accordion-icon");
-
-  // Starttilstand
-  if (startOpen) {
-    wrapper.classList.remove("collapsed");
-    card.classList.add("is-open");
-    card.classList.remove("is-collapsed");
-    chevron.classList.add("rotated");
-  } else {
-    wrapper.classList.add("collapsed");
-    card.classList.add("is-collapsed");
-    card.classList.remove("is-open");
-    chevron.classList.remove("rotated");
+    case "completed":
+      setIcon(statusIcon, "check_circle");
+      wrapper.classList.add("collapsed");
+      disable(card);
+      button.textContent = "Fuldført";
+      enableAccordion(header, wrapper, card, false);
+      break;
   }
-
-  // Klik på header
-  header.onclick = () => {
-    const isCollapsed = wrapper.classList.contains("collapsed");
-
-    wrapper.classList.toggle("collapsed");
-    card.classList.toggle("is-open", isCollapsed);
-    card.classList.toggle("is-collapsed", !isCollapsed);
-
-    chevron.classList.toggle("rotated", isCollapsed);
-  };
 }
 
 function disable(card) {
-  card.querySelectorAll("input, button").forEach((el) => (el.disabled = true));
+  card.querySelectorAll("input, button").forEach((e) => (e.disabled = true));
 }
 
-function setStatusIcon(container, iconName) {
-  container.innerHTML = `
-    <span class="material-symbols-outlined">
-      ${iconName}
-    </span>
-  `;
+function setIcon(el, name) {
+  el.innerHTML = `<span class="material-symbols-outlined">${name}</span>`;
 }

@@ -9,6 +9,14 @@ html, body {
   color: $white_text;
 }
 
+p{
+  @include brodtext;
+}
+button {
+  cursor: pointer;
+  @include button-text;
+}
+
 /* Header */
 .topbar {
   position: fixed;
@@ -66,14 +74,6 @@ main {
   @include button-text;
 }
 
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
-}
-
 /* Fjern zoomknapper */
 .leaflet-control-zoom {
     display: none;
@@ -87,17 +87,52 @@ main {
   transform: translateX(-50%);
   background: $dark_grey;
   border: 1px solid #1e293b;
-  padding: 1rem;
-  width: 70%;
-  max-width: 22.5rem;
+  padding: $spacing-400;
+  max-width: 20.625rem;
   border-radius: 1rem;
   z-index: 2000;
-}
+  margin-top: 0;
 
-.popup-actions {
+  .popup-header {
+    display: flex;
+    gap: $spacing-100;
+    margin-bottom: 0.5rem;
+    align-items: flex-start;
+    border-bottom: 1px solid $white-text;
+    margin-left: -$spacing-400;
+    margin-right: -$spacing-400;
+    padding-left: $spacing-400;
+    padding-right: $spacing-400;
+
+    .alert-wrapper {
+      height: 0.5rem;
+        img {
+        background-color: $white_text;
+        padding: 0.2rem;
+        width: 70%;
+      }
+    }
+    .popup-text {
+      h2 {
+        @include dropdown-text;
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+      }
+    } 
+  }
+
+  .popup-actions {
   display: flex;
   gap: 0.5rem;
+
+   #goToMissionBtn, #closePopupBtn {
+    padding: 0;
+   }
+  }
 }
+
+
+
 
 .popup button {
   flex: 1;

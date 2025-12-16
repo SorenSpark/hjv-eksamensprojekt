@@ -33,16 +33,6 @@ main {
   height: 100%;
 }
 
-/* VIEWS */
-.view {
-  display: none;
-  height: 100%;
-}
-
-.view.active {
-  display: block;
-}
-
 /* MAP */
 #map {
   /* height: calc(100vh - 48px - 64px); */
@@ -113,37 +103,75 @@ main {
   display: none;
 }
 
-/* Task view */
+/* task view */
+/* VIEWS */
+.view {
+  display: none;
+  background-color: hsla(0, 0%, 28%, 0.7);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  min-height: 100%;
+}
 
-#taskView {
-  background-color: rgb(99, 99, 99);
+.view.active {
+  display: block;
+}
+
+/* List Wrappers */
+#activeList-wrapper,
+#completedList-wrapper {
+  border: 1px solid hsl(0, 0%, 59%);
+  padding: 0.5rem;
+  border-radius: 10px;
+}
+
+#activeMissionList,
+#completedList-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 /* Mission card */
 .mission-card {
-  background-color: hsl(235, 46%, 20%);
-} /*# sourceMappingURL=style.css.map */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid hsla(0, 0%, 100%, 0.6);
+}
 
 .mission-card-header {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
+  color: hsla(0, 0%, 100%, 0.7);
+  font-family: "verdana", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25rem;
 }
 
-.collapsed {
+.mission-card-header-group {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Mission card states */
+.mission-desc-wrapper.collapsed {
   display: none;
 }
 
-.mission-card.locked {
-  opacity: 0.5;
-}
 .mission-card.state-locked {
-  background-color: rgb(137, 208, 244);
-}
-.mission-card.state-completed {
-  background-color: rgb(245, 170, 227);
+  background-color: hsl(174, 18%, 30%);
 }
 
-.mission-card .state-active {
-  background-color: rgb(175, 255, 141);
+.mission-card.state-active {
+  background-color: hsl(174, 18%, 30%);
 }
+
+.mission-card.state-completed {
+  background-color: #dc1414;
+}/*# sourceMappingURL=style.css.map */

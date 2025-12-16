@@ -25,8 +25,64 @@ const locationMarker = L.icon({
 
   iconSize: [30, 25],
 });
-const userMarker = L.marker([56.12, 9.12], {icon: locationMarker}).addTo(map);
+const userMarker = L.marker([56.12, 9.12], {
+  icon: locationMarker,
+  rotationAngle: 0,
+  rotationOrigin: 'center'
+}).addTo(map);
 
+// enhedens orientation
+let orientationActive = false;
+
+function requestOrientationPermission() {
+  if (typeof DeviceOrientationEvent !== 'undefined' && 
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    // iOS 13+ requires permission
+    DeviceOrientationEvent.requestPermission()
+      .then(response => {
+        if (response === 'granted') {
+          startOrientationTracking();
+        } else {
+          console.log('Orientation permission denied');
+        }
+      })
+      .catch(console.error);
+  } else {
+    // Non-iOS or older devices
+    startOrientationTracking();
+  }
+}
+
+function startOrientationTracking() {
+  orientationActive = true;
+  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+  window.addEventListener('deviceorientation', handleOrientation, true);
+}
+
+function handleOrientation(event) {
+  if (!orientationActive) return;
+  
+  let heading = null;
+  
+  if (event.absolute && event.alpha !== null) {
+    // Android Chrome
+    heading = 360 - event.alpha;
+  } else if (event.webkitCompassHeading !== undefined) {
+    // iOS Safari
+    heading = event.webkitCompassHeading;
+  } else if (event.alpha !== null) {
+    // Fallback
+    heading = 360 - event.alpha;
+  }
+  
+  if (heading !== null) {
+    userMarker.setRotationAngle(heading);
+  }
+}
+
+
+// Nyere IOS kræver brugervalgt svar på aktivering.
+requestOrientationPermission();
 
 
 // Forslag til Geo-lokation og tracking:

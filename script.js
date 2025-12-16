@@ -20,7 +20,13 @@ let currentTaskIndex = 0;
 let activeTask = null;
 let activeZone = null;
 
-const userMarker = L.marker([56.12, 9.12]).addTo(map);
+const locationMarker = L.icon({
+  iconUrl: 'assets/locationMarker.svg',
+
+  iconSize: [30, 25],
+});
+const userMarker = L.marker([56.12, 9.12], {icon: locationMarker}).addTo(map);
+
 
 
 // Forslag til Geo-lokation og tracking:
@@ -73,13 +79,13 @@ function activateNextTask() {
     {
       radius: activeTask.mapRadiusInMeters,
       color: "#ffffffff",
-      fillColor: "#ffffffff",
+      fillColor: "#8D1B3D",
       fillOpacity: 0.3,
     }
   ).addTo(map);
 }
 
-//Simuler bevægelse
+//Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
 map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
@@ -97,9 +103,7 @@ map.on("mousemove", (e) => {
 //Opdater koordinator i topbar
 
 function updateCoordinates(lat, lng) {
-  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(
-    5
-  )} | Lng: ${lng.toFixed(5)}`;
+  document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
 }
 
 //Kald når brugeren flytter sig
@@ -141,13 +145,17 @@ function showPopup(task) {
 
 //Popup-knapper
 
+//Luk popup
 document.getElementById("closePopupBtn").onclick = () => {
   document.getElementById("popup").classList.add("hidden");
 };
 
+//Gå til misson
 document.getElementById("goToMissionBtn").onclick = () => {
-  // 👉 link til din medstuderendes side
-  window.location.href = "mission.html?taskId=" + activeTask.taskId;
+  mapView.classList.remove("active");
+  taskView.classList.add("active");
+  showingMap = false;
+  document.getElementById("popup").classList.add("hidden");
 };
 
 //Skift mellem map og opgaveliste
@@ -171,12 +179,24 @@ toggleBtn.onclick = () => {
   }
 };
 
-//TODO: BESKED TIL MAJA OM AT MISSION ER FULDFØRT
+//Fjerner aktiv zone og aktiverer næste opgave på kortet, når mission er fuldført
+
 export function taskCompletedCallback(taskId) {
   console.log("Maja får besked: mission fuldført", taskId);
-  // TO DO: Her kan Maja aktivere næste mission
+  //Fjern nuværende aktive zone på kortet
+  if (activeZone) {
+    map.removeLayer(activeZone);
+    activeZone = null;
+  }
+  // Aktiver næste opgave
+  currentTaskIndex++;
+    if (currentTaskIndex < tasks.length) {
+    console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
+    activateNextTask();
+  } else {
+    console.log("Alle tasks er fuldført");
+  }
 }
 
-//Start
 
 loadScenario();

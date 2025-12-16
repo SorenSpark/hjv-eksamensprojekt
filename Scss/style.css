@@ -11,6 +11,21 @@ body {
   color: hsl(0, 100%, 100%);
 }
 
+p {
+  font-family: "verdana", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.2rem;
+}
+
+button {
+  cursor: pointer;
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+
 /* Header */
 .topbar {
   position: fixed;
@@ -77,17 +92,55 @@ main {
   left: 50%;
   transform: translateX(-50%);
   background: hsl(0, 0%, 28%);
-  border: 1px solid #1e293b;
-  padding: 1rem;
-  width: 70%;
-  max-width: 22.5rem;
+  border: 1.5px solid hsl(0, 100%, 100%);
   border-radius: 1rem;
   z-index: 2000;
+  margin-top: 0;
+  max-width: 22.5rem;
+  min-width: 18.5rem;
 }
-
-.popup-actions {
+.popup .popup-header {
   display: flex;
-  gap: 0.5rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  align-items: flex-start;
+  border-bottom: 1px solid hsl(0, 100%, 100%);
+}
+.popup .popup-header .alert-wrapper {
+  height: 0.5rem;
+  width: 20%;
+}
+.popup .popup-header .alert-wrapper img {
+  background-color: hsl(0, 100%, 100%);
+  padding: 0.2rem;
+  width: 100%;
+}
+.popup .popup-header .popup-text h2 {
+  font-family: "verdana", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.popup .popup-header .popup-text p {
+  margin-bottom: 0;
+}
+.popup .popup-actions {
+  display: flex;
+}
+.popup .popup-actions #goToMissionBtn, .popup .popup-actions #closePopupBtn {
+  padding: 0.5rem;
+}
+.popup .popup-actions #goToMissionBtn:hover, .popup .popup-actions #closePopupBtn:hover {
+  background-color: hsl(0, 0%, 59%);
+}
+.popup .popup-actions #goToMissionBtn {
+  border-radius: 0 0 1rem 0;
+  border-left: 1px solid hsl(0, 100%, 100%);
+}
+.popup .popup-actions #closePopupBtn {
+  border-radius: 0 0 0 1rem;
 }
 
 .popup button {

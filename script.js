@@ -169,7 +169,22 @@ toggleBtn.onclick = () => {
   }
 };
 
-//TODO: BESKED TIL MAJA OM AT MISSION ER FULDFØRT
+//Vis besked om fuldført mission
+function showCompletionMessage(taskNumber) {
+  const message = taskNumber < tasks.length 
+    ? `Godt klaret! Næste mission er nu aktiveret på kortet.`
+    : `Fantastisk arbejde! Alle missioner er nu fuldført. 🎉`;
+  
+  document.getElementById("completionMessage").textContent = message;
+  document.getElementById("completionNotification").classList.remove("hidden");
+}
+
+//Luk completion notification
+document.getElementById("closeCompletionBtn").onclick = () => {
+  document.getElementById("completionNotification").classList.add("hidden");
+};
+
+//BESKED TIL MAJA OM AT MISSION ER FULDFØRT
 export function taskCompletedCallback(taskId) {
   console.log("Maja får besked: mission fuldført", taskId);
   //Fjern nuværende aktive zone på kortet
@@ -179,7 +194,11 @@ export function taskCompletedCallback(taskId) {
   }
   // Aktiver næste opgave
   currentTaskIndex++;
-    if (currentTaskIndex < tasks.length) {
+  
+  // Vis besked til brugeren om fuldført mission
+  showCompletionMessage(currentTaskIndex);
+  
+  if (currentTaskIndex < tasks.length) {
     console.log("Aktiverer næste task:", tasks[currentTaskIndex].idT);
     activateNextTask();
   } else {

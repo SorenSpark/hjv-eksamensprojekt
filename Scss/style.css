@@ -147,10 +147,14 @@ main {
   display: flex;
   justify-content: space-between;
   color: hsla(0, 0%, 100%, 0.7);
+  cursor: pointer;
   font-family: "verdana", sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
   line-height: 1.25rem;
+}
+.mission-card-header:hover {
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .mission-card-header-group {
@@ -160,8 +164,16 @@ main {
 }
 
 /* Mission card states */
+.mission-desc-wrapper {
+  overflow: hidden;
+  max-height: 1000px;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  opacity: 1;
+}
+
 .mission-desc-wrapper.collapsed {
-  display: none;
+  max-height: 0;
+  opacity: 0;
 }
 
 .mission-card.state-locked {
@@ -174,4 +186,23 @@ main {
 
 .mission-card.state-completed {
   background-color: #dc1414;
+}
+
+/*Ikoner*/
+.material-symbols-outlined {
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.accordion-icon {
+  transition: transform 0.25s ease;
+}
+
+.mission-card.is-collapsed .accordion-icon {
+  transform: rotate(0deg);
+}
+
+.mission-card.is-open .accordion-icon {
+  transform: rotate(90deg);
 }/*# sourceMappingURL=style.css.map */

@@ -145,9 +145,15 @@ main {
   display: flex;
   justify-content: space-between;
   color: $white_opacity_70;
+  cursor: pointer;
   @include dropdown-text;
+
   // border-bottom: 1px solid $white_opacity_10;
   // padding-bottom: $spacing-100;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
 }
 
 .mission-card-header-group {
@@ -157,8 +163,17 @@ main {
 }
 
 /* Mission card states */
+
+.mission-desc-wrapper {
+  overflow: hidden;
+  max-height: 1000px; // stor nok til indhold
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+  opacity: 1;
+}
+
 .mission-desc-wrapper.collapsed {
-  display: none;
+  max-height: 0;
+  opacity: 0;
 }
 
 .mission-card.state-locked {
@@ -171,4 +186,23 @@ main {
 
 .mission-card.state-completed {
   background-color: #dc1414;
+}
+
+/*Ikoner*/
+.material-symbols-outlined {
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.accordion-icon {
+  transition: transform 0.25s ease;
+}
+
+.mission-card.is-collapsed .accordion-icon {
+  transform: rotate(0deg);
+}
+
+.mission-card.is-open .accordion-icon {
+  transform: rotate(90deg);
 }

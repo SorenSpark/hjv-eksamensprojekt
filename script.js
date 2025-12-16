@@ -139,13 +139,17 @@ function showPopup(task) {
 
 //Popup-knapper
 
+//Luk popup
 document.getElementById("closePopupBtn").onclick = () => {
   document.getElementById("popup").classList.add("hidden");
 };
 
+//Gå til misson
 document.getElementById("goToMissionBtn").onclick = () => {
-  // 👉 link til din medstuderendes side
-  window.location.href = "mission.html?taskId=" + activeTask.taskId;
+  mapView.classList.remove("active");
+  taskView.classList.add("active");
+  showingMap = false;
+  document.getElementById("popup").classList.add("hidden");
 };
 
 //Skift mellem map og opgaveliste

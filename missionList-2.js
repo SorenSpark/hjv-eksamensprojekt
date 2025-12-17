@@ -76,15 +76,6 @@ function createCardUI() {
   renderCompleted();
 }
 
-// function renderActiveAndLocked() {
-//   const container = document.getElementById("activeMissionList");
-//   container.innerHTML = "";
-
-//   [...lockedMissions, ...activeMissions].forEach((mission) => {
-//     container.appendChild(createMissionCard(mission));
-//   });
-// }
-
 function renderActiveAndLocked() {
   const container = document.getElementById("activeMissionList");
   container.innerHTML = "";

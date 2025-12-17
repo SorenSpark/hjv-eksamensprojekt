@@ -4,21 +4,26 @@ export function buildOptions(mission, wrapper, button) {
 
   if (!Array.isArray(mission.options)) return;
 
-  mission.options.forEach((opt) => {
+  mission.options.forEach((optText, i) => {
     const label = document.createElement("label");
     label.classList.add("option-btn");
 
     const radio = document.createElement("input");
     radio.type = "radio";
     radio.name = `mission-${mission.idT}`;
-    radio.checked = mission.selectedOption === opt.optionId;
+    radio.value = i;
+    radio.checked = mission.selectedOption === i;
 
-    radio.onchange = () => {
-      mission.selectedOption = opt.optionId;
-      button.disabled = false;
-    };
+    // Tekst i span
+    const span = document.createElement("span");
+    span.textContent = optText;
 
-    label.append(radio, opt.optionText);
+    radio.addEventListener("change", () => {
+      mission.selectedOption = i;
+      if (button) button.disabled = false;
+    });
+    label.appendChild(radio);
+    label.appendChild(span);
     container.appendChild(label);
   });
 }

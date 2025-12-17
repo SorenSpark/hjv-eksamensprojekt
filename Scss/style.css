@@ -2,6 +2,7 @@
 /* Colors */
 /* Typography */
 /* Text styles */
+/* Map & zone */
 html, body {
   height: 100%;
   margin: 0;
@@ -19,7 +20,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
   z-index: 1000;
   background-color: hsl(0, 0%, 28%);
 }

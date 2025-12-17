@@ -8,9 +8,10 @@
   --card-bg: #{$dark_grey_70};
   --border-color: #{$light_grey};
   --task-text: #{$white_text};
+  --primary_red: #{$primary_red};
 }
 
-// JavaScript-triggered light mode
+// light mode
 html.light-mode {
   --text-color: hsl(0, 0%, 20%);
   --bg-color: hsl(0, 0%, 85%);

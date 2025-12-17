@@ -317,6 +317,7 @@ document.getElementById("goToMissionBtn").onclick = () => {
   mapView.classList.remove("active");
   taskView.classList.add("active");
   showingMap = false;
+  toggleBtn.textContent = "Tilbage til kort";
   document.getElementById("popup").classList.add("hidden");
 };
 

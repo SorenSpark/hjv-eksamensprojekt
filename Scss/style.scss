@@ -9,6 +9,11 @@ body {
   margin: 0;
   font-family: $font-family;
   color: var(--text-color);
+  font-size: 16px;
+  
+  @media (max-width: 767px) {
+    font-size: 18px;
+  }
 }
 
 p {
@@ -117,7 +122,7 @@ html.light-mode .logo-path {
   .topbar-bottom & {
     width: 100%;
     height: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 250, 250, 0.852);
   }
   
   @media (min-width: 768px) {
@@ -136,12 +141,12 @@ html.light-mode .logo-path {
 
 .progress-text {
   color: var(--text-color);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 500;
   min-width: 2rem;
   
   .topbar-bottom & {
-    font-size: 0.75rem;
+    font-size: 1.2rem;
     text-align: center;
     font-family: 'TT Chocolates', sans-serif;
     font-weight: 400;
@@ -228,10 +233,13 @@ main {
 
 /* MAP */
 #map {
-  /* height: calc(100vh - 48px - 64px); */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100vh;
   z-index: 0;
-  filter: brightness(0.7) contrast(1.1);
+  filter: brightness(0.4) contrast(1.0);
   transition: filter 0.3s ease;
 }
 
@@ -241,7 +249,7 @@ main {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 3.813rem;
+  height: 4rem;
   background: $dark_grey;
   color: $white_text;
   border: none;
@@ -253,7 +261,13 @@ main {
   @include button-text;
 }
 
+html.light-mode .bottom-btn {
+  background: $white_text;
+  color: $dark_text;
+}
+
 .material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
@@ -394,15 +408,39 @@ main {
 
 /* VIEWS */
 .view {
-  display: none;
-  background-color: var(--card-bg);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  min-height: 100%;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
   padding: 0.5rem;
 }
 
 .view.active {
+  display: block;
+}
+
+#mapView {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  pointer-events: none;
+}
+
+#mapView.active {
+  pointer-events: auto;
+}
+
+#taskView {
+  display: none;
+}
+
+html.light-mode #taskView {
+  backdrop-filter: blur(3px);
+  width: 100%;
+}
+
+#taskView.active {
   display: block;
 }
 
@@ -566,6 +604,12 @@ main {
 .option-btn:hover {
   background: $white_opacity_25;
 }
+
+.option-btn:has(input[type="radio"]:checked) {
+  background: $white_opacity_50;
+  border-color: $white_text;
+}
+
 .state-completed .option-btn:hover {
   background: none !important; // eller samme som default
   cursor: not-allowed;
@@ -611,18 +655,15 @@ main {
 
 /* Coordinates Display */
 #coords {
-  font-size: 12px;
+  font-size: 0.75rem;
   color: var(--text-color);
+  position: absolute;
+  left: 50%;
+  top: 2.7rem;
+  transform: translateX(-50%);
   
   @media (min-width: 768px) {
-    position: absolute;
-    bottom: 1rem;
-    left: 1rem;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 0.5rem;
-    border-radius: 4px;
-    font-size: 12px;
-    z-index: 1000;
+    font-size: 1rem;
+    top: auto;
   }
 }

@@ -25,7 +25,7 @@ export function createMissionCard(mission) {
   // Tilføjer klasse til styling af forskellige states
   card.classList.add(`state-${mission.status}`);
 
-  typeIcon.textContent = getTaskTypeIcon(mission.scenarioEnvironment); //modul: missionIcons
+  typeIcon.textContent = getTaskTypeIcon(mission.taskType); //modul: missionIcons
   buildOptions(mission, wrapper, completeButton); // modul: missionOptions
   applyState({ mission, card, header, wrapper, statusIcon, completeButton });
 

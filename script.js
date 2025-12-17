@@ -19,10 +19,12 @@ let currentTaskIndex = 0;
 let activeTask = null;
 let activeZone = null;
 
-// VARIABLER TIL ROTATION (Placeres her i toppen)
+// VARIABLER TIL ROTATION
 let currentRotation = 0;
 let lastRawHeading = 0;
 
+
+// Brugerens markør
 const locationMarker = L.icon({
   iconUrl: "assets/locationMarker.svg",
   iconSize: [30, 25],
@@ -37,7 +39,7 @@ const userMarker = L.marker([56.12, 9.12], {
 // Enhedens orientation
 let orientationActive = false;
 
-function requestOrientationPermission() {
+/* function requestOrientationPermission() {
   if (typeof DeviceOrientationEvent !== 'undefined' && 
       typeof DeviceOrientationEvent.requestPermission === 'function') {
     DeviceOrientationEvent.requestPermission()
@@ -60,7 +62,7 @@ function startOrientationTracking() {
   window.addEventListener('deviceorientation', handleOrientation, true);
 }
 
-// NY HANDLE ORIENTATION (Med Shortest Path logik)
+// Handle orientation til både Android og IOS
 function handleOrientation(event) {
     if (!orientationActive) return;
     
@@ -72,7 +74,7 @@ function handleOrientation(event) {
     }
 
     if (heading !== null && userMarker._icon) {
-        // Beregn den korteste vej for at undgå "panic spin"
+        // Beregner den korteste vej for at undgå "dødsspin"
         let delta = heading - lastRawHeading;
         if (delta > 180) delta -= 360;
         if (delta < -180) delta += 360;
@@ -91,7 +93,7 @@ function applyRotation() {
         element.style.transition = 'transform 0.1s linear';
         element.style.transformOrigin = 'center';
         
-        // Bevar positionen fra Leaflet (translate3d) og tilføj vores rotation
+        // Bevar positionen fra Leaflet (translated) og tilføj vores rotation
         const currentTransform = element.style.transform.replace(/rotate\([\s\S]*?deg\)/g, "");
         element.style.transform = `${currentTransform} rotate(${currentRotation}deg)`;
     }
@@ -107,7 +109,7 @@ if (navigator.geolocation){
             userMarker.setLatLng([userLat, userLng]);
             map.setView([userLat, userLng]);
             
-            // VIGTIGT: Gen-anvend rotationen her, ellers nulstiller Leaflet den ved hver bevægelse
+            // VIGTIGT: Gen-anvendelse af rotationen her, ellers nulstiller Leaflet den ved hver bevægelse
             applyRotation(); 
             
             updateCoordinates(userLat, userLng);
@@ -126,13 +128,13 @@ if (navigator.geolocation){
     console.error("browseren understøtter ikke geolokation")
 };
 
-// Kompas aktivering knap - TILFØJ DETTE
+// Kompas aktivering knap
 document.getElementById("enableCompass").onclick = () => {
   console.log("🔘 Kompas knap klikket - anmoder om permission");
   requestOrientationPermission();
   // Skjul knappen efter klik
   document.getElementById("enableCompass").style.display = 'none';
-};
+}; */
 
 //Vis intro popup
 function showIntroPopup(scenario) {
@@ -181,7 +183,7 @@ function activateNextTask() {
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
-/* map.on("click", (e) => {
+map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
@@ -193,7 +195,7 @@ map.on("mousemove", (e) => {
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
 });
- */
+
 //Opdater koordinator i topbar
 
  function updateCoordinates(lat, lng) {
@@ -202,11 +204,11 @@ map.on("mousemove", (e) => {
 
 //Kald når brugeren flytter sig
 
-/* map.on("click", (e) => {
+map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-}); */
+});
 
 //Tjek om brugeren er i zonen
 function checkZone() {

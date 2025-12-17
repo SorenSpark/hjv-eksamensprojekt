@@ -398,7 +398,7 @@ main {
   bottom: 20px; 
   right: 20px; 
   z-index: 1000; 
-  padding: 15px 20px; 
+  padding: $spacing-200; 
   background: $primary_red;  
   border: none; 
   border-radius: 8px; 
@@ -406,5 +406,6 @@ main {
 
 .leaflet-marker-icon {
     /* Prevent Leaflet's internal transitions from fighting the rotation */
-    transition: transform 0.1s linear !important; 
+    transition: transform 0.1s linear !important;
+    transform-origin: center; 
 }

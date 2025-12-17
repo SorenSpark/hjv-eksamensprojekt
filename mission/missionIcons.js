@@ -1,6 +1,6 @@
 //Her tjekker vi hvilket environment missionen er i, og sætter passende ikon ind
 
-function getTaskTypeIcon(env) {
+export function getTaskTypeIcon(env) {
   switch (env) {
     case "Land":
       return "terrain";
@@ -11,4 +11,4 @@ function getTaskTypeIcon(env) {
   }
 }
 
-module.exports = { getTaskTypeIcon };
+// module.exports = { getTaskTypeIcon };//til test

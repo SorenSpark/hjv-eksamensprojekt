@@ -15,6 +15,7 @@ $dark_text: hsl(0, 0%, 6%);
 
 $primary_red: hsl(342, 68%, 33%);
 $primary_grey: hsl(174, 18%, 30%);
+$primary_blue: hsl(207, 89%, 58%);
 
 $dark_grey: hsl(0, 0%, 28%);
 $dark_grey_60: hsla(0, 0%, 28%, 0.6);
@@ -28,6 +29,13 @@ $button_stroke: hsla(0, 0%, 92%, 0.75);
 $overlap_map_lightmode: hsla(0, 0%, 24%, 0.1);
 $overlap_map_darkmode: hsla(0, 0%, 28%, 0.78);
 $card_background_lightmode: hsla(0, 0%, 98%, 0.7);
+
+/* Light Mode Colors */
+$light_bg: hsl(0, 0%, 100%);
+$light_text: hsl(0, 0%, 0%);
+$light_card_bg: hsl(0, 0%, 100%);
+$light_border: hsl(0, 0%, 70%);
+$light_grey_text: hsl(0, 0%, 40%);
 
 $white_opacity_10: hsla(0, 0%, 100%, 0.1);
 $white_opacity_25: hsla(0, 0%, 100%, 0.25);

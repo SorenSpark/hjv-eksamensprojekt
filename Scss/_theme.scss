@@ -1,0 +1,28 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+// Light/Dark Mode - Dark mode er default
+:root {
+  --text-color: #{$white_text};
+  --bg-color: #{$dark_grey};
+  --card-bg: #{$dark_grey_70};
+  --border-color: #{$light_grey};
+  --task-text: #{$white_text};
+}
+
+// JavaScript-triggered light mode
+html.light-mode {
+  --text-color: hsl(0, 0%, 20%);
+  --bg-color: hsl(0, 0%, 85%);
+  --card-bg: hsla(0, 0%, 90%, 0.8);
+  --border-color: hsl(0, 0%, 40%);
+
+  #map {
+    filter: brightness(1) contrast(1);
+  }
+}
+
+/* _variables.scss = Farver der bruges når siden bygges
+_theme.scss = Farver der kan ændres når siden køres
+
+Det er derfor :root CSS variabler bruges i _theme.scss - fordi JavaScript kan ændre dem  */

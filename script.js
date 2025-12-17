@@ -1,6 +1,43 @@
 import { receiveScenario } from "./missionList.js";
 import { receiveTaskActivated } from "./missionList.js";
 
+/* Toggle Dark/light */
+const themeToggle = document.getElementById('themeToggle');
+const htmlElement = document.documentElement;
+
+// aktiver dark/light fra localStorage
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  
+  if (savedTheme === 'light') {
+    htmlElement.classList.add('light-mode');
+    themeToggle.checked = true;
+  } else {
+    // Default til dark mode
+    htmlElement.classList.remove('light-mode');
+    themeToggle.checked = false;
+    if (!savedTheme) {
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+}
+
+function toggleTheme() {
+  const isLightMode = themeToggle.checked;
+  const theme = isLightMode ? 'light' : 'dark';
+  
+  if (isLightMode) {
+    htmlElement.classList.add('light-mode');
+  } else {
+    htmlElement.classList.remove('light-mode');
+  }
+  
+  localStorage.setItem('theme', theme);
+}
+
+themeToggle.addEventListener('change', toggleTheme);
+initTheme();
+
 /* leaflet & openstreetmap */
 let map = L.map("map");
 map.setView([56.123, 9.123], 13);
@@ -23,8 +60,36 @@ let activeZone = null;
 let currentRotation = 0;
 let lastRawHeading = 0;
 
-
 // Brugerens markør
+// Progress bar elements
+const progressFill = document.getElementById('progressFill');
+const progressText = document.getElementById('progressText');
+const progressFillDesktop = document.getElementById('progressFillDesktop');
+const progressTextDesktop = document.getElementById('progressTextDesktop');
+let totalMissions = 0;
+let completedMissions = 0;
+
+// Initialize progress bar
+function initializeProgressBar() {
+  totalMissions = 3; // Always show 3 missions for consistent progress display
+  completedMissions = 0;
+  updateProgressBar();
+}
+
+// Update progress bar display
+function updateProgressBar() {
+  const percentage = totalMissions > 0 ? (completedMissions / totalMissions) * 100 : 0;
+  const text = `${completedMissions}/${totalMissions}`;
+  
+  // Update mobile progress bar
+  if (progressFill) progressFill.style.width = `${percentage}%`;
+  if (progressText) progressText.textContent = text;
+  
+  // Update desktop progress bar
+  if (progressFillDesktop) progressFillDesktop.style.width = `${percentage}%`;
+  if (progressTextDesktop) progressTextDesktop.textContent = text;
+}
+
 const locationMarker = L.icon({
   iconUrl: "assets/locationMarker.svg",
   iconSize: [30, 25],
@@ -151,6 +216,7 @@ async function loadScenario() {
   const scenario = await response.json();
 
   tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
+  initializeProgressBar();
   receiveScenario(scenario);
   showIntroPopup(scenario);
 };
@@ -279,6 +345,11 @@ toggleBtn.onclick = () => {
 
 export function taskCompletedCallback(taskId) {
   console.log("Maja får besked: mission fuldført", taskId);
+  
+  // Update progress bar
+  completedMissions++;
+  updateProgressBar();
+  
   //Fjern nuværende aktive zone på kortet
   if (activeZone) {
     map.removeLayer(activeZone);

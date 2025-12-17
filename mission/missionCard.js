@@ -1,6 +1,7 @@
 import { completeMission } from "./missionState.js";
 import { buildOptions } from "./missionOptions.js";
 import { enableAccordion } from "./missionAccordion.js";
+import { getTaskTypeIcon } from "./missionIcons.js";
 
 // Her bliver mission cards bygget ud fra html templaten
 export function createMissionCard(mission) {
@@ -12,6 +13,7 @@ export function createMissionCard(mission) {
   const wrapper = clone.querySelector(".mission-desc-wrapper");
   const statusIcon = clone.querySelector(".mission-status-icon");
   const completeButton = clone.querySelector(".complete-btn");
+  const typeIcon = clone.querySelector(".mission-desc-icon");
 
   // Data indsættes i klon
   clone.querySelector(
@@ -23,7 +25,8 @@ export function createMissionCard(mission) {
   // Tilføjer klasse til styling af forskellige states
   card.classList.add(`state-${mission.status}`);
 
-  buildOptions(mission, wrapper, completeButton); //kalder funktion i missionOptions.js modul
+  typeIcon.textContent = getTaskTypeIcon(mission.scenarioEnvironment); //modul: missionIcons
+  buildOptions(mission, wrapper, completeButton); // modul: missionOptions
   applyState({ mission, card, header, wrapper, statusIcon, completeButton });
 
   return clone;

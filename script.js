@@ -13,31 +13,33 @@ setTimeout(() => {
   map.invalidateSize();
 }, 100);
 
-//globale variabler
-
+// Globale variabler
 let tasks = [];
 let currentTaskIndex = 0;
 let activeTask = null;
 let activeZone = null;
 
+// VARIABLER TIL ROTATION (Placeres her i toppen)
+let currentRotation = 0;
+let lastRawHeading = 0;
+
 const locationMarker = L.icon({
   iconUrl: "assets/locationMarker.svg",
-
   iconSize: [30, 25],
 });
+
 const userMarker = L.marker([56.12, 9.12], {
   icon: locationMarker,
   rotationAngle: 0,
   rotationOrigin: 'center'
 }).addTo(map);
 
-// enhedens orientation
+// Enhedens orientation
 let orientationActive = false;
 
 function requestOrientationPermission() {
   if (typeof DeviceOrientationEvent !== 'undefined' && 
       typeof DeviceOrientationEvent.requestPermission === 'function') {
-    // iOS 13+ requires permission
     DeviceOrientationEvent.requestPermission()
       .then(response => {
         if (response === 'granted') {
@@ -48,7 +50,6 @@ function requestOrientationPermission() {
       })
       .catch(console.error);
   } else {
-    // Non-iOS or older devices
     startOrientationTracking();
   }
 }
@@ -59,36 +60,45 @@ function startOrientationTracking() {
   window.addEventListener('deviceorientation', handleOrientation, true);
 }
 
+// NY HANDLE ORIENTATION (Med Shortest Path logik)
 function handleOrientation(event) {
-  if (!orientationActive) return;
-  
-  let heading = null;
-  
-  if (event.absolute && event.alpha !== null) {
-    // Android Chrome
-    heading = 360 - event.alpha;
-  } else if (event.webkitCompassHeading !== undefined) {
-    // iOS Safari
-    heading = event.webkitCompassHeading;
-  } else if (event.alpha !== null) {
-    // Fallback
-    heading = 360 - event.alpha;
-  }
-  
-  if (heading !== null) {
-    userMarker.setRotationAngle(heading);
-  }
+    if (!orientationActive) return;
+    
+    let heading = null;
+    if (event.webkitCompassHeading !== undefined) {
+        heading = event.webkitCompassHeading; // iOS
+    } else if (event.alpha !== null) {
+        heading = 360 - event.alpha; // Android
+    }
+
+    if (heading !== null && userMarker._icon) {
+        // Beregn den korteste vej for at undgå "panic spin"
+        let delta = heading - lastRawHeading;
+        if (delta > 180) delta -= 360;
+        if (delta < -180) delta += 360;
+
+        currentRotation += delta;
+        lastRawHeading = heading;
+
+        applyRotation(); // Kalder hjælpefunktion til at tegne rotationen
+    }
 }
 
+// HJÆLPEFUNKTION: Påfører rotation på DOM elementet
+function applyRotation() {
+    if (userMarker._icon) {
+        const element = userMarker._icon;
+        element.style.transition = 'transform 0.1s linear';
+        element.style.transformOrigin = 'center';
+        
+        // Bevar positionen fra Leaflet (translate3d) og tilføj vores rotation
+        const currentTransform = element.style.transform.replace(/rotate\([\s\S]*?deg\)/g, "");
+        element.style.transform = `${currentTransform} rotate(${currentRotation}deg)`;
+    }
+}
 
-// Nyere IOS kræver brugervalgt svar på aktivering.
-
-
-
-// Forslag til Geo-lokation og tracking:
-/* if (navigator.geolocation){
-      // Anmod om compasstilladelse sammen med location
-    requestOrientationPermission();
+// GEO-LOKATION (Opdateret til at bevare rotation ved bevægelse)
+if (navigator.geolocation){
     navigator.geolocation.watchPosition( 
         (position) => {
             const userLat = position.coords.latitude;
@@ -96,6 +106,11 @@ function handleOrientation(event) {
         
             userMarker.setLatLng([userLat, userLng]);
             map.setView([userLat, userLng]);
+            
+            // VIGTIGT: Gen-anvend rotationen her, ellers nulstiller Leaflet den ved hver bevægelse
+            applyRotation(); 
+            
+            updateCoordinates(userLat, userLng);
             checkZone();
         },
         (error) => {
@@ -109,7 +124,15 @@ function handleOrientation(event) {
     );
 } else {
     console.error("browseren understøtter ikke geolokation")
-}; */
+};
+
+// Kompas aktivering knap - TILFØJ DETTE
+document.getElementById("enableCompass").onclick = () => {
+  console.log("🔘 Kompas knap klikket - anmoder om permission");
+  requestOrientationPermission();
+  // Skjul knappen efter klik
+  document.getElementById("enableCompass").style.display = 'none';
+};
 
 //Vis intro popup
 function showIntroPopup(scenario) {
@@ -117,7 +140,7 @@ function showIntroPopup(scenario) {
   document.getElementById("introDescription").textContent = scenario.scenarioDescription;
   document.getElementById("introPopup").classList.remove("hidden");
   document.getElementById("introPopup").style.display = "block";
-}
+};
 
 //Indlæs scenarie
 
@@ -128,7 +151,7 @@ async function loadScenario() {
   tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
   receiveScenario(scenario);
   showIntroPopup(scenario);
-}
+};
   
   // Når brugeren klikker start:
   document.getElementById("startScenarioBtn").onclick = () => {
@@ -154,11 +177,11 @@ function activateNextTask() {
     fillColor: "#8D1B3D",
     fillOpacity: 0.3,
   }).addTo(map);
-}
+};
 
 //Simuler bevægelse (TO DO: se "Kald når brugeren flytter sig" - vi kan nøjes med én af dem - tilføj eft. updateCoordinates her og slet den anden)
 
-map.on("click", (e) => {
+/* map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   checkZone();
 });
@@ -170,20 +193,20 @@ map.on("mousemove", (e) => {
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
 });
-
+ */
 //Opdater koordinator i topbar
 
  function updateCoordinates(lat, lng) {
   document.getElementById("coords").textContent = `Lat: ${lat.toFixed(5)} | Lng: ${lng.toFixed(5)}`;
-}
+};
 
 //Kald når brugeren flytter sig
 
-map.on("click", (e) => {
+/* map.on("click", (e) => {
   userMarker.setLatLng(e.latlng);
   updateCoordinates(e.latlng.lat, e.latlng.lng);
   checkZone();
-});
+}); */
 
 //Tjek om brugeren er i zonen
 function checkZone() {
@@ -200,7 +223,7 @@ function checkZone() {
     receiveTaskActivated(activeTask.idT);
     console.log("Task activated:", activeTask.idT);
   }
-}
+};
 
 //Popup visning
 
@@ -212,7 +235,7 @@ function showPopup(task) {
     task.taskDescription;
 
   document.getElementById("popup").classList.remove("hidden");
-}
+};
 
 //Popup-knapper
 
@@ -267,6 +290,6 @@ export function taskCompletedCallback(taskId) {
   } else {
     console.log("Alle tasks er fuldført");
   }
-}
+};
 
 loadScenario();

@@ -408,4 +408,21 @@ main {
   padding: 1rem;
   color: hsl(174, 18%, 30%);
   max-height: 100%;
+}
+
+/* Compass og marker rotation */
+#enableCompass {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 15px 20px;
+  background: hsl(342, 68%, 33%);
+  border: none;
+  border-radius: 8px;
+}
+
+.leaflet-marker-icon {
+  /* Prevent Leaflet's internal transitions from fighting the rotation */
+  transition: transform 0.1s linear !important;
 }/*# sourceMappingURL=style.css.map */

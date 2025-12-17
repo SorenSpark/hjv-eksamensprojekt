@@ -70,8 +70,8 @@ let totalMissions = 0;
 let completedMissions = 0;
 
 // Initialize progress bar
-function initializeProgressBar() {
-  totalMissions = 3; // Always show 3 missions for consistent progress display
+function initializeProgressBar(scenario) {
+  totalMissions = scenario.tasks.length;
   completedMissions = 0;
   updateProgressBar();
 }
@@ -216,7 +216,7 @@ async function loadScenario() {
   const scenario = await response.json();
 
   tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
-  initializeProgressBar();
+  initializeProgressBar(scenario);
   receiveScenario(scenario);
   showIntroPopup(scenario);
 };

@@ -685,8 +685,8 @@ html.light-mode #taskView {
 /* Compass og marker rotation */
 #enableCompass {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 100px;
+  right: 30px;
   z-index: 1000;
   padding: 1rem;
   background: hsl(342, 68%, 33%);

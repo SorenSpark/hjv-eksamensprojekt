@@ -74,6 +74,48 @@ main {
   display: none;
 }
 
+/* INTRO POPUP */
+#introPopup {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: $dark_grey;
+  border: 1.5px solid $white-text;
+  border-radius: 1rem;
+  z-index: 2000;
+  max-width: 22.5rem;
+  min-width: 16.5rem;
+  padding: $spacing-400 $spacing-300;
+
+  .intro-popup-text {
+    padding: $spacing-200;
+    border: 1px solid $white-text;
+    border-radius: 1rem;
+    margin-bottom: $spacing-300;
+  }
+
+  #introExplanation {
+    padding: $spacing-200;
+    background-color: $white_opacity_10;
+    margin-bottom: $spacing-300;
+  }
+
+  #startScenarioBtn {
+      padding: 10px 16px;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid var(--white-text, #fff);
+      background-color: var(--primary_red, #8d1b3d);
+      color: $white_text;
+      @include button-text;
+
+      &:hover {
+        background-color: var(--primary_red, 0.5);
+      }
+  }
+}
+
 /* POPUP */
 .popup {
   position: fixed;

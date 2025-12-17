@@ -101,8 +101,8 @@ const userMarker = L.marker([56.151, 9.524], {
   rotationOrigin: 'center'
 }).addTo(map);
 
-// Enhedens orientation
-let orientationActive = false;
+/* // Enhedens orientation
+let orientationActive = false; */
 
 /* function requestOrientationPermission() {
   if (typeof DeviceOrientationEvent !== 'undefined' && 
@@ -195,7 +195,7 @@ if (navigator.geolocation){
 
 // Kompas aktivering knap
 document.getElementById("enableCompass").onclick = () => {
-  console.log("🔘 Kompas knap klikket - anmoder om permission");
+  console.log("Kompas knap klikket - anmoder om permission");
   requestOrientationPermission();
   // Skjul knappen efter klik
   document.getElementById("enableCompass").style.display = 'none';
@@ -241,7 +241,7 @@ function activateNextTask() {
 
   activeZone = L.circle([activeTask.mapLat, activeTask.mapLng], {
     radius: activeTask.mapRadiusInMeters,
-    color: "#ffffffff",
+    color: "#8D1B3D",
     fillColor: "#8D1B3D",
     fillOpacity: 0.3,
   }).addTo(map);

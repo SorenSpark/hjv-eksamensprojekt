@@ -594,8 +594,8 @@ main {
 /* Compass og marker rotation */
 #enableCompass {
   position: fixed; 
-  bottom: 20px; 
-  right: 20px; 
+  bottom: 100px; 
+  right: 30px; 
   z-index: 1000; 
   padding: $spacing-200; 
   background: $primary_red;  

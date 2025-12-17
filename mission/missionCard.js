@@ -2,6 +2,7 @@ import { completeMission } from "./missionState.js";
 import { buildOptions } from "./missionOptions.js";
 import { enableAccordion } from "./missionAccordion.js";
 
+// Her bliver mission cards bygget ud fra html templaten
 export function createMissionCard(mission) {
   const template = document.getElementById("mission-card-template");
   const clone = template.content.cloneNode(true);
@@ -10,7 +11,7 @@ export function createMissionCard(mission) {
   const header = clone.querySelector(".mission-card-header");
   const wrapper = clone.querySelector(".mission-desc-wrapper");
   const statusIcon = clone.querySelector(".mission-status-icon");
-  const button = clone.querySelector(".complete-btn");
+  const completeButton = clone.querySelector(".complete-btn");
 
   // Data indsættes i klon
   clone.querySelector(
@@ -22,13 +23,21 @@ export function createMissionCard(mission) {
   // Tilføjer klasse til styling af forskellige states
   card.classList.add(`state-${mission.status}`);
 
-  buildOptions(mission, wrapper, button); //kalder funktion i missionOptions.js modul
-  applyState({ mission, card, header, wrapper, statusIcon, button });
+  buildOptions(mission, wrapper, completeButton); //kalder funktion i missionOptions.js modul
+  applyState({ mission, card, header, wrapper, statusIcon, completeButton });
 
   return clone;
 }
 
-function applyState({ mission, card, header, wrapper, statusIcon, button }) {
+//udgangspunkt for cards alt efter state
+function applyState({
+  mission,
+  card,
+  header,
+  wrapper,
+  statusIcon,
+  completeButton,
+}) {
   switch (mission.status) {
     case "locked":
       setIcon(statusIcon, "lock");
@@ -39,8 +48,8 @@ function applyState({ mission, card, header, wrapper, statusIcon, button }) {
 
     case "active":
       setIcon(statusIcon, "radio_button_unchecked");
-      button.disabled = !mission.selectedOption;
-      button.onclick = () => completeMission(mission.idT);
+      completeButton.disabled = !mission.selectedOption;
+      completeButton.onclick = () => completeMission(mission.idT);
       enableAccordion(header, wrapper, card, true);
       break;
 
@@ -48,14 +57,16 @@ function applyState({ mission, card, header, wrapper, statusIcon, button }) {
       setIcon(statusIcon, "check_circle");
       wrapper.classList.add("collapsed");
       disable(card);
-      button.textContent = "Fuldført";
+      completeButton.textContent = "Fuldført";
       enableAccordion(header, wrapper, card, false);
       break;
   }
 }
 
 function disable(card) {
-  card.querySelectorAll("input, button").forEach((e) => (e.disabled = true));
+  card
+    .querySelectorAll("input, completeButton")
+    .forEach((e) => (e.disabled = true));
 }
 
 function setIcon(el, name) {

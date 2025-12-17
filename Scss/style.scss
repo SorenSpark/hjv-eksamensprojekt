@@ -102,17 +102,17 @@ main {
   }
 
   #startScenarioBtn {
-      padding: 10px 16px;
-      width: 100%;
-      border-radius: 5px;
-      border: 1px solid var(--white-text, #fff);
-      background-color: var(--primary_red, #8d1b3d);
-      color: $white_text;
-      @include button-text;
+    padding: 10px 16px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid var(--white-text, #fff);
+    background-color: var(--primary_red, #8d1b3d);
+    color: $white_text;
+    @include button-text;
 
-      &:hover {
-        background-color: var(--primary_red, 0.5);
-      }
+    &:hover {
+      background-color: var(--primary_red, 0.5);
+    }
   }
 }
 
@@ -251,15 +251,11 @@ main {
 .mission-card-header {
   display: flex;
   justify-content: space-between;
-  // color: $white_opacity_70;
   cursor: pointer;
   @include dropdown-text;
 
-  // border-bottom: 1px solid $white_opacity_10;
-  // padding-bottom: $spacing-100;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+  .state-locked & {
+    cursor: default;
   }
 }
 
@@ -285,7 +281,10 @@ main {
 
 .mission-desc-text {
   display: flex;
-  gap: 8px;
+  gap: $spacing-100;
+  margin-top: $spacing-200;
+  padding-top: $spacing-200;
+  border-top: 1px solid $white_opacity_10;
 }
 
 .mission-desc {
@@ -340,8 +339,14 @@ main {
   }
 }
 
-button[disabled] {
+.complete-btn:disabled,
+.state-completed .complete-btn {
   opacity: 0.5;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: var(--primary_red, #8d1b3d);
+  }
 }
 
 /*radio button*/
@@ -363,20 +368,25 @@ button[disabled] {
 .option-btn:hover {
   background: $white_opacity_25;
 }
-
-.option-btn:has(input[type="radio"]:checked) {
-  background: $white_opacity_50;
+.state-completed .option-btn:hover {
+  background: none !important; // eller samme som default
+  cursor: not-allowed;
 }
 
+.state-completed .option-btn:has(input[type="radio"]:checked) {
+  background: $white_opacity_50;
+  cursor: not-allowed;
+}
 .state-locked .option-btn,
 .state-completed .option-btn {
   opacity: 0.9;
   cursor: not-allowed;
+  background-color: var(--primary_red);
 }
 
 /**mission icon**/
 .mission-desc-icon.material-symbols-outlined {
-  font-size: $spacing-200;
+  font-size: $spacing-400;
   background-color: $white_opacity_80;
   padding: $spacing-200;
   color: $primary_grey;

@@ -31,5 +31,5 @@ function renderCompleted(completed) {
     return;
   }
 
-  missions.forEach((m) => container.appendChild(createMissionCard(m)));
+  completed.forEach((m) => container.appendChild(createMissionCard(m)));
 }

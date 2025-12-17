@@ -40,7 +40,7 @@ initTheme();
 
 /* leaflet & openstreetmap */
 let map = L.map("map");
-map.setView([56.123, 9.123], 13);
+map.setView([56.151, 9.524], 15);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap",
@@ -95,7 +95,7 @@ const locationMarker = L.icon({
   iconSize: [30, 25],
 });
 
-const userMarker = L.marker([56.12, 9.12], {
+const userMarker = L.marker([56.151, 9.524], {
   icon: locationMarker,
   rotationAngle: 0,
   rotationOrigin: 'center'

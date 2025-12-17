@@ -264,8 +264,8 @@ main {
   font-weight: 700;
   line-height: 1.25rem;
 }
-.mission-card-header:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+.state-locked .mission-card-header {
+  cursor: default;
 }
 
 .mission-card-header-group {
@@ -289,7 +289,10 @@ main {
 
 .mission-desc-text {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid hsla(0, 0%, 100%, 0.1);
 }
 
 .mission-desc {
@@ -347,8 +350,14 @@ main {
   background-color: var(--primary_red, 0.5);
 }
 
-button[disabled] {
+.complete-btn:disabled,
+.state-completed .complete-btn {
   opacity: 0.5;
+  cursor: not-allowed;
+}
+.complete-btn:disabled:hover,
+.state-completed .complete-btn:hover {
+  background-color: var(--primary_red, #8d1b3d);
 }
 
 /*radio button*/
@@ -375,19 +384,26 @@ button[disabled] {
   background: hsla(0, 0%, 100%, 0.25);
 }
 
-.option-btn:has(input[type=radio]:checked) {
+.state-completed .option-btn:hover {
+  background: none !important;
+  cursor: not-allowed;
+}
+
+.state-completed .option-btn:has(input[type=radio]:checked) {
   background: hsla(0, 0%, 100%, 0.5);
+  cursor: not-allowed;
 }
 
 .state-locked .option-btn,
 .state-completed .option-btn {
   opacity: 0.9;
   cursor: not-allowed;
+  background-color: var(--primary_red);
 }
 
 /**mission icon**/
 .mission-desc-icon.material-symbols-outlined {
-  font-size: 1rem;
+  font-size: 2rem;
   background-color: hsla(0, 0%, 100%, 0.8);
   padding: 1rem;
   color: hsl(174, 18%, 30%);

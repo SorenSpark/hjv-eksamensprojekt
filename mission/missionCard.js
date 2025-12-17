@@ -29,7 +29,7 @@ export function createMissionCard(mission) {
   return clone;
 }
 
-//udgangspunkt for cards alt efter
+//udgangspunkt for cards alt efter state
 function applyState({
   mission,
   card,

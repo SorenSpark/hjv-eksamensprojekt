@@ -85,6 +85,47 @@ main {
   display: none;
 }
 
+/* INTRO POPUP */
+#introPopup {
+  position: fixed;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: hsl(0, 0%, 28%);
+  border: 1.5px solid hsl(0, 100%, 100%);
+  border-radius: 1rem;
+  z-index: 2000;
+  max-width: 22.5rem;
+  min-width: 16.5rem;
+  padding: 2rem 1.5rem;
+}
+#introPopup .intro-popup-text {
+  padding: 1rem;
+  border: 1px solid hsl(0, 100%, 100%);
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+}
+#introPopup #introExplanation {
+  padding: 1rem;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  margin-bottom: 1.5rem;
+}
+#introPopup #startScenarioBtn {
+  padding: 10px 16px;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--white-text, #fff);
+  background-color: var(--primary_red, #8d1b3d);
+  color: hsl(0, 100%, 100%);
+  font-family: "verdana", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 2rem;
+}
+#introPopup #startScenarioBtn:hover {
+  background-color: var(--primary_red, 0.5);
+}
+
 /* POPUP */
 .popup {
   position: fixed;

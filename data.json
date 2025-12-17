@@ -1,97 +1,81 @@
 {
-  "scenarioId": "S1",
-  "scenarioTitle": "Finderup Natøvelse",
-  "scenarioDescription": "Denne scenario er oprettet til formål med ..",
-  "scenarioEnvironment": "land",
-  "scenarioCreatedBy": "Bo",
-  "scenarioCreatedTime": "2025-12-09T08:00:00",
+  "scenarioId": "S1765883672925",
+  "scenarioTitle": "Test Land Opgaver",
+  "scenarioDescription": "Beskrivelse af land",
+  "scenarioEnvironment": "Land",
+  "scenarioCreatedBy": "Gamemaster",
+  "scenarioCreatedTime": "2025-12-16T11:14:44.430Z",
   "scenarioIsActive": true,
-
   "tasks": [
     {
-      "idT": 101,
-      "taskId": "T15",
-      "taskTitle": "Patrulje i nat",
-      "taskDescription": "Se efter i området for at se, om alt er ok",
+      "idT": 1,
+      "taskId": "T1",
+      "taskTitle": "Natpatrulje i skovområdet",
+      "taskDescription": "Patruljér gennem skovstykket og kontroller, om der er tegn på aktivitet.",
+      "taskType": "Land",
       "orderNumber": 1,
       "mapType": "zone",
-      "mapRadiusInMeters": 200,
+      "mapRadiusInMeters": 100,
       "mapLabel": "OP1",
-      "mapLat": 56.123,
-      "mapLng": 9.123,
+      "mapLat": 56.1543,
+      "mapLng": 9.5321,
       "isActive": false,
       "options": [
-        {
-          "optionId": "A",
-          "optionText": "Patruljen gennemfører en stille og systematisk rute gennem zonen",
-          "isCorrect": true
-        },
-        {
-          "optionId": "B",
-          "optionText": "Patruljen bliver ved køretøjerne og observerer kun derfra",
-          "isCorrect": false
-        },
-        {
-          "optionId": "C",
-          "optionText": "Patruljen tænder alt lys for at få fuldt overblik",
-          "isCorrect": false
-        }
-      ]
+        "Patruljen er gennemført",
+        "Området virker utrygt - gentag patrulje"
+      ],
+      "taskTypeLabel": ""
     },
     {
-      "idT": 102,
-      "taskId": "T8",
-      "taskTitle": "Observation nord",
-      "taskDescription": "Observation af aktivitet i området mod nord",
+      "idT": 2,
+      "taskId": "T2",
+      "taskTitle": "Sikringspost sydlig vej",
+      "taskDescription": "Etabler en sikringspost ved den sydlige adgangsvej og observer bevægelse.",
+      "taskType": "Land",
       "orderNumber": 2,
-      "mapType": "punkt",
-      "mapRadiusInMeters": 200,
-      "mapLabel": "Z1",
-      "mapLat": 56.128,
-      "mapLng": 9.13,
+      "mapType": "zone",
+      "mapRadiusInMeters": 150,
+      "mapLabel": "OP2",
+      "mapLat": 55.9852,
+      "mapLng": 8.1257,
       "isActive": false,
       "options": [
-        {
-          "optionId": "A",
-          "optionText": "Observationsposten etableres i dækning med udsyn mod nord",
-          "isCorrect": true
-        },
-        {
-          "optionId": "B",
-          "optionText": "Observationsposten etableres midt på vejen for bedst udsyn",
-          "isCorrect": false
-        }
-      ]
+        "Post etableret og bemandet",
+        "Omplacér posten til bedre dækning"
+      ],
+      "taskTypeLabel": ""
     },
     {
-      "idT": 103,
-      "taskId": "T10",
-      "taskTitle": "Sikring af område",
-      "taskDescription": "Sikring af området omkring OP2",
+      "idT": 3,
+      "taskId": "T3",
+      "taskTitle": "Midlertidig førstehjælpszone",
+      "taskDescription": "Opsæt en midlertidig førstehjælpsstation til støtte for enheden.",
+      "taskType": "Land",
       "orderNumber": 3,
-      "mapType": "zone",
-      "mapRadiusInMeters": 230,
-      "mapLabel": "OP2",
-      "mapLat": 56.14,
-      "mapLng": 9.1,
+      "mapType": "punkt",
+      "mapRadiusInMeters": 20,
+      "mapLabel": "OP3",
+      "mapLat": 56.2034,
+      "mapLng": 10.1876,
       "isActive": false,
-      "options": [
-        {
-          "optionId": "A",
-          "optionText": "Der opstilles vagter i nøglepunkter rundt om zonen",
-          "isCorrect": true
-        },
-        {
-          "optionId": "B",
-          "optionText": "Hele delingen samles ét sted for at være tættere på hinanden",
-          "isCorrect": false
-        },
-        {
-          "optionId": "C",
-          "optionText": "Området efterlades uden bemanding for at undgå opdagelse",
-          "isCorrect": false
-        }
-      ]
+      "options": ["Station klar til brug", "Mangler materiel - rapportér"],
+      "taskTypeLabel": ""
+    },
+    {
+      "idT": 4,
+      "taskId": "T4",
+      "taskTitle": "Observation af rute Bravo",
+      "taskDescription": "Overvåg rute Bravo og notér antal køretøjer og retning.",
+      "taskType": "Land",
+      "orderNumber": 4,
+      "mapType": "punkt",
+      "mapRadiusInMeters": 120,
+      "mapLabel": "OP4",
+      "mapLat": 55.7201,
+      "mapLng": 9.1043,
+      "isActive": false,
+      "options": ["Begrænset aktivitet", "Høj aktivitet - videregiv melding"],
+      "taskTypeLabel": ""
     }
   ]
 }

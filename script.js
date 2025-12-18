@@ -40,7 +40,7 @@ initTheme();
 
 /* leaflet & openstreetmap */
 let map = L.map("map");
-map.setView([56.123, 9.123], 13);
+map.setView([56.151, 9.524], 15);
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap",
@@ -70,8 +70,8 @@ let totalMissions = 0;
 let completedMissions = 0;
 
 // Initialize progress bar
-function initializeProgressBar() {
-  totalMissions = 3; // Always show 3 missions for consistent progress display
+function initializeProgressBar(scenario) {
+  totalMissions = scenario.tasks.length;
   completedMissions = 0;
   updateProgressBar();
 }
@@ -95,14 +95,14 @@ const locationMarker = L.icon({
   iconSize: [30, 25],
 });
 
-const userMarker = L.marker([56.12, 9.12], {
+const userMarker = L.marker([56.151, 9.524], {
   icon: locationMarker,
   rotationAngle: 0,
   rotationOrigin: 'center'
 }).addTo(map);
 
-// Enhedens orientation
-let orientationActive = false;
+/* // Enhedens orientation
+let orientationActive = false; */
 
 /* function requestOrientationPermission() {
   if (typeof DeviceOrientationEvent !== 'undefined' && 
@@ -195,7 +195,7 @@ if (navigator.geolocation){
 
 // Kompas aktivering knap
 document.getElementById("enableCompass").onclick = () => {
-  console.log("🔘 Kompas knap klikket - anmoder om permission");
+  console.log("Kompas knap klikket - anmoder om permission");
   requestOrientationPermission();
   // Skjul knappen efter klik
   document.getElementById("enableCompass").style.display = 'none';
@@ -216,7 +216,7 @@ async function loadScenario() {
   const scenario = await response.json();
 
   tasks = scenario.tasks.sort((a, b) => a.orderNumber - b.orderNumber);
-  initializeProgressBar();
+  initializeProgressBar(scenario);
   receiveScenario(scenario);
   showIntroPopup(scenario);
 };
@@ -241,7 +241,7 @@ function activateNextTask() {
 
   activeZone = L.circle([activeTask.mapLat, activeTask.mapLng], {
     radius: activeTask.mapRadiusInMeters,
-    color: "#ffffffff",
+    color: "#8D1B3D",
     fillColor: "#8D1B3D",
     fillOpacity: 0.3,
   }).addTo(map);
@@ -317,6 +317,7 @@ document.getElementById("goToMissionBtn").onclick = () => {
   mapView.classList.remove("active");
   taskView.classList.add("active");
   showingMap = false;
+  toggleBtn.textContent = "Tilbage til kort";
   document.getElementById("popup").classList.add("hidden");
 };
 

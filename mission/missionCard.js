@@ -75,5 +75,3 @@ function disable(card) {
 function setIcon(el, name) {
   el.innerHTML = `<span class="material-symbols-outlined">${name}</span>`;
 }
-
-export { applyState };

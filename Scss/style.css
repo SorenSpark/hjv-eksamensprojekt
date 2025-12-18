@@ -502,7 +502,7 @@ html.light-mode #taskView {
 }
 
 #activeMissionList,
-#completedList {
+#completedMissionList {
   display: flex;
   flex-direction: column;
   gap: 1rem;

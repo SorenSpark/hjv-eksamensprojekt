@@ -1,5 +1,5 @@
-@use './variables' as *;
-@use './mixins' as *;
+@use "./variables" as *;
+@use "./mixins" as *;
 
 // Light/Dark Mode - Dark mode er default
 :root {
@@ -20,6 +20,8 @@ html.light-mode {
 
   #map {
     filter: brightness(1) contrast(1);
+  }
+  #taskView.active {
   }
 }
 

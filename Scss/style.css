@@ -22,7 +22,6 @@ html.light-mode {
 html.light-mode #map {
   filter: brightness(1) contrast(1);
 }
-
 /* _variables.scss = Farver der bruges når siden bygges
 _theme.scss = Farver der kan ændres når siden køres
 
@@ -47,7 +46,7 @@ p {
   font-family: "verdana", sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.2rem;
+  line-height: 0.875rem;
 }
 
 button {
@@ -276,7 +275,7 @@ main {
   width: 100%;
   height: 100vh;
   z-index: 0;
-  filter: brightness(0.4) contrast(1);
+  filter: brightness(0.9) contrast(1);
   transition: filter 0.3s ease;
 }
 
@@ -471,12 +470,19 @@ html.light-mode .bottom-btn {
 }
 
 html.light-mode #taskView {
-  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
   width: 100%;
+  background-color: none;
+  background-color: hsla(0, 0%, 100%, 0.1);
 }
 
 #taskView.active {
   display: block;
+  width: 100%;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  background-color: hsla(0, 0%, 28%, 0.6);
 }
 
 /* List Wrappers */
@@ -485,6 +491,10 @@ html.light-mode #taskView {
   border: 1px solid var(--border-color);
   padding: 0.5rem;
   border-radius: 10px;
+}
+
+#completedList-wrapper {
+  margin-bottom: 4rem;
 }
 
 #activeList-wrapper {
@@ -566,7 +576,7 @@ html.light-mode #taskView {
   font-family: "verdana", sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.2rem;
+  line-height: 0.875rem;
 }
 
 .mission-card.state-locked {
@@ -644,7 +654,7 @@ html.light-mode #taskView {
   font-family: "verdana", sans-serif;
   font-size: 0.875rem;
   font-weight: 400;
-  line-height: 1.2rem;
+  line-height: 0.875rem;
 }
 
 .option-btn:hover {
@@ -714,6 +724,4 @@ html.light-mode #taskView {
     font-size: 1rem;
     top: auto;
   }
-}
-
-/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=style.css.map */

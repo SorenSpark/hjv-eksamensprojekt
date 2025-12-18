@@ -1,15 +1,25 @@
-import { getTaskTypeIcon } from "../mission/missionIcons.js";
+const { getTaskTypeIcon } = require("../missionIcons");
 
 describe("getTaskTypeIcon", () => {
-  test("returnerer 'water' når env er Vand", () => {
-    expect(getTaskTypeIcon("Vand")).toBe("water");
-  });
-
-  test("returnerer 'terrain' når env er Land", () => {
+  it('returns "terrain" for "Land"', () => {
     expect(getTaskTypeIcon("Land")).toBe("terrain");
   });
 
-  test("returnerer fallback 'help' ved ukendt env", () => {
-    expect(getTaskTypeIcon("Luft")).toBe("help");
+  it('returns "water" for "Vand"', () => {
+    expect(getTaskTypeIcon("Vand")).toBe("water");
+  });
+
+  it('returns "help" for other values', () => {
+    expect(getTaskTypeIcon("Air")).toBe("help");
+    expect(getTaskTypeIcon("Undefined")).toBe("help");
   });
 });
+
+//tester hver case i swtich statement
+//tester logik - input'et "vand"s forventede output er water.
+//hvis funktionen returnere vand er det derfor passed
+
+// termer:
+//describe blok: gruppere tests
+//test ell it: en specifik test (input og output)
+//expect() og toBe: vores forventede output

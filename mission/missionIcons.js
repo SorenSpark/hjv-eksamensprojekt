@@ -7,6 +7,8 @@ export function getTaskTypeIcon(env) {
     case "Vand":
       return "water";
     default:
-      return "help"; // fallback
+      return "help";
   }
 }
+
+// module.exports = { getTaskTypeIcon }; //til test

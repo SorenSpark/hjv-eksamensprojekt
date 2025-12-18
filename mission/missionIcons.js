@@ -11,4 +11,4 @@ export function getTaskTypeIcon(env) {
   }
 }
 
-// module.exports = { getTaskTypeIcon };//til test
+// module.exports = { getTaskTypeIcon }; //til test

@@ -158,7 +158,7 @@ function applyRotation() {
         element.style.transition = 'transform 0.1s linear';
         element.style.transformOrigin = 'center';
         
-        // Bevar positionen fra Leaflet (translated) og tilføj vores rotation
+        // Bevar positionen fra Leaflet og tilføj rotation
         const currentTransform = element.style.transform.replace(/rotate\([\s\S]*?deg\)/g, "");
         element.style.transform = `${currentTransform} rotate(${currentRotation}deg)`;
     }
